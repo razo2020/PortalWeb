@@ -16,5 +16,5 @@
 ###< symfony/web-server-bundle ###
 
 ###> phpstrom/project ###
-/.idea
+/.idea/
 ###< phpstrom/project ###
