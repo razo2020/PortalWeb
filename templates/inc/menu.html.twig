@@ -1,6 +1,6 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="/">Start Bootstrap</a>
+    <a class="navbar-brand" href="/">Portal Web</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -19,35 +19,55 @@
                     <span class="nav-link-text">Empresas</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Almacen">
-                <a class="nav-link" href="/almacen">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Almacenes">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseAlmacenes" data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-area-chart"></i>
-                    <span class="nav-link-text">Almacen</span>
+                    <span class="nav-link-text">Almacenes</span>
                 </a>
+                <ul class="sidenav-second-level collapse" id="collapseAlmacenes">
+                    <li>
+                        <a class="nav-link" href="/almacen">
+                            <i class="fa fa-fw fa-cubes"></i>
+                            <span class="nav-link-text">Almacén</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/material">
+                            <i class="fa fa-fw fa-cube"></i>
+                            <span class="nav-link-text">Material</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/entrega">
+                            <i class="fa fa-fw fa-truck"></i>
+                            <span class="nav-link-text">Entrega</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Solicitudes">
-                <a class="nav-link" href="/Solpe">
-                    <i class="fa fa-fw fa-table"></i>
+                <a class="nav-link" href="/solpe">
+                    <i class="fa fa-fw fa-book"></i>
                     <span class="nav-link-text">Solicitudes</span>
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Compras">
-                <a class="nav-link" href="tables.html">
-                    <i class="fa fa-fw fa-table"></i>
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseCompras" data-parent="#exampleAccordion">
+                    <i class="fa fa-fw fa-shopping-bag"></i>
                     <span class="nav-link-text">Compras</span>
                 </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-                    <i class="fa fa-fw fa-wrench"></i>
-                    <span class="nav-link-text" data-toggle="tooltip" data-placement="right" title="Components">Components</span>
-                </a>
-                <ul class="sidenav-second-level collapse" id="collapseComponents">
+                <ul class="sidenav-second-level collapse" id="collapseCompras">
                     <li>
-                        <a href="navbar.html">Navbar</a>
+                        <a class="nav-link" href="/peticionoferta">
+                            <i class="fa fa-fw fa-legal"></i>
+                            <span class="nav-link-text">Licitación</span>
+                        </a>
                     </li>
                     <li>
-                        <a href="cards.html">Cards</a>
+                        <a class="nav-link" href="/pedido">
+                            <i class="fa fa-fw fa-shopping-cart"></i>
+                            <span class="nav-link-text">Pedido</span>
+                        </a>
                     </li>
                 </ul>
             </li>
@@ -70,43 +90,6 @@
                         <a href="blank.html">Blank Page</a>
                     </li>
                 </ul>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-                    <i class="fa fa-fw fa-sitemap"></i>
-                    <span class="nav-link-text">Menu Levels</span>
-                </a>
-                <ul class="sidenav-second-level collapse" id="collapseMulti">
-                    <li>
-                        <a href="#">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="#">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="#">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-                        <ul class="sidenav-third-level collapse" id="collapseMulti2">
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-fw fa-link"></i>
-                    <span class="nav-link-text">Link</span>
-                </a>
             </li>
         </ul>
         <ul class="navbar-nav sidenav-toggler">
@@ -221,6 +204,14 @@
                             <strong>
                                 <i class="fa fa-gears fa-fw"></i>
                                 Configuraciones
+                            </strong>
+                        </span>
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <span class="text-success">
+                            <strong>
+                                <i class="fa fa-home fa-fw"></i>
+                                Casa de Mensajería
                             </strong>
                         </span>
                     </a>

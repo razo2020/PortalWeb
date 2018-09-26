@@ -17,7 +17,7 @@ class Empresa
      *
      * @ORM\Column(name="RUC", type="string", length=11, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $ruc;
 

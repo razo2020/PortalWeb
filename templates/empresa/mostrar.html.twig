@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mantenimiento de Empresa{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/user/{id}">Tablero</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/empresa">Empresas</a>
+            </li>
+            <li class="breadcrumb-item active">Empresa</li>
+        </ol>
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">
+                <h5>
+                    <p class="text-center">{{ empresa.razonsocial }}
+                        <span class="small float-right text-muted">{{ empresa.Ruc }}</span>
+                    </p>
+                </h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="direccionInput">Dirección:</label>
+                        <input class="form-control" id="direccionInput" type="text" aria-describedby="direccionHelp" placeholder="Ingresar dirección de la empresa" value="{{ empresa.direccion }}">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="telefono1Input">1 Telefono:</label>
+                                <input class="form-control" id="telefono1Input" type="number" aria-describedby="telefono1Help" placeholder="Ingresar telefono" value="{{ empresa.telefono1 }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telefono2Input">2 Telefono:</label>
+                                <input class="form-control" id="telefono2Input" type="number" aria-describedby="telefono2Help" placeholder="Ingresar telefono" value="{{ empresa.telefono2 }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="rubroInput">Rubro:</label>
+                                <input class="form-control" id="rubroInput" type="text" aria-describedby="rubroHelp" placeholder="Ingresar Rubro" value="{{ empresa.rubro }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Tipo de empresa:</label>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="grupoTipo1" name="grupoTipoEmpresa" value="1" checked>
+                                    <label class="form-check-label" for="grupoTipo1">Cliente</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="grupoTipo2" name="grupoTipoEmpresa" value="2">
+                                    <label class="form-check-label" for="grupoTipo2">Proveedor</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="grupoTipo3" name="grupoTipoEmpresa" value="3">
+                                    <label class="form-check-label" for="grupoTipo3">Cliente y proveedor</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary btn-block" href="/empresa">Guardar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
