@@ -10,14 +10,14 @@
                 <a href="/user/{id}">Tablero</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="/empresa">Empresas</a>
+                <a href="{{ path('lista_empresas') }}">Empresas</a>
             </li>
             <li class="breadcrumb-item active">Empresa</li>
         </ol>
         <div class="card card-register mx-auto mt-5">
             <div class="card-header">
                 <h5>
-                    <p class="text-center">{{ empresa.razonsocial }}
+                    <p class="text-center">{{ empresa.razonSocial }}
                         <span class="small float-right text-muted">{{ empresa.Ruc }}</span>
                     </p>
                 </h5>
