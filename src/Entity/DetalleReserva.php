@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * DetalleReserva
  *
  * @ORM\Table(name="detalle_reserva", indexes={@ORM\Index(name="fk_Reserva_has_Almacen_has_Material_Reserva1_idx", columns={"Reserva_idReserva"}), @ORM\Index(name="fk_Detalle_Reserva_Ubicacion1_idx", columns={"Ubicacion_idUbicacion"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\DetalleReservaRepository")
  */
 class DetalleReserva
 {

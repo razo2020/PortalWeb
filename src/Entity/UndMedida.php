@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * UndMedida
  *
  * @ORM\Table(name="und_medida")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UndMedidaRepository")
  */
 class UndMedida
 {

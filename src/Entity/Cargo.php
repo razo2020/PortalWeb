@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Cargo
  *
  * @ORM\Table(name="cargo", uniqueConstraints={@ORM\UniqueConstraint(name="CargoNombre_UNIQUE", columns={"nombre"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CargoRepository")
  */
 class Cargo
 {
@@ -33,7 +33,7 @@ class Cargo
     /**
      * @var \Usuario
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Usuario", mappedBy="cargocargo")
+     * @ORM\OneToMany(targetEntity="App\Entity\Usuario", mappedBy="cargo")
      */
     private $usuarios;
 
@@ -71,7 +71,7 @@ class Cargo
     {
         if (!$this->usuarios->contains($usuario)) {
             $this->usuarios[] = $usuario;
-            $usuario->setCargocargo($this);
+            $usuario->setCargo($this);
         }
 
         return $this;
@@ -82,8 +82,8 @@ class Cargo
         if ($this->usuarios->contains($usuario)) {
             $this->usuarios->removeElement($usuario);
             // set the owning side to null (unless already changed)
-            if ($usuario->getCargocargo() === $this) {
-                $usuario->setCargocargo(null);
+            if ($usuario->getCargo() === $this) {
+                $usuario->setCargo(null);
             }
         }
 

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Guia
  *
  * @ORM\Table(name="guia")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\GuiaRepository")
  */
 class Guia
 {

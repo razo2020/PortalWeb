@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Entrega
  *
  * @ORM\Table(name="entrega", uniqueConstraints={@ORM\UniqueConstraint(name="idPedido_idGuia_UNIQUE", columns={"Detalle_Pedido_Pedido_idPedido", "Detalle_Pedido_idPosicion", "Detalle_Guia_Guia_idGuia", "Detalle_Guia_idPosicion"})}, indexes={@ORM\Index(name="fk_Detalle_Pedido_has_Detalle_Guia_Detalle_Guia1_idx", columns={"Detalle_Guia_Guia_idGuia", "Detalle_Guia_idPosicion"}), @ORM\Index(name="fk_Detalle_Pedido_has_Detalle_Guia_Detalle_Pedido1_idx", columns={"Detalle_Pedido_Pedido_idPedido", "Detalle_Pedido_idPosicion"}), @ORM\Index(name="fk_Detalle_Pedido_has_Detalle_Guia_Comprobante1_idx", columns={"Comprobante_idComprobante"}), @ORM\Index(name="fk_Entregas_Devoluciones1_idx", columns={"Devolucion_idDevolucion"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\EntregaRepository")
  */
 class Entrega
 {

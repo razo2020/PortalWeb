@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Nivel
  *
  * @ORM\Table(name="nivel", indexes={@ORM\Index(name="fk_Nivel_Aprobaciones1_idx", columns={"Aprobacion_idAprobacion"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\NivelRepository")
  */
 class Nivel
 {

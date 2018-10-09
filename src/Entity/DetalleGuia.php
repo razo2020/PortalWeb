@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * DetalleGuia
  *
  * @ORM\Table(name="detalle_guia", indexes={@ORM\Index(name="IDX_96D1AAD024B239D8", columns={"Guia_idGuia"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\DetalleGuiaRepository")
  */
 class DetalleGuia
 {

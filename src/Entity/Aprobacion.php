@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Aprobacion
  *
  * @ORM\Table(name="aprobacion")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AprobacionRepository")
  */
 class Aprobacion
 {

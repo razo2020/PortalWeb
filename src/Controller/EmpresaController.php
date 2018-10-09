@@ -3,7 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Empresa;
+use App\Entity\Almacen;
+use App\Entity\Usuario;
 use App\Form\EmpresaType;
+use App\Repository\AlmacenRepository;
+use App\Repository\EmpresaRepository;
+use App\Repository\UsuarioRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +20,12 @@ class EmpresaController extends AbstractController
     /**
      * @Route("/empresa", name="lista_empresas")
      */
-    public function index()
+    public function index(EmpresaRepository $empresas): Response
     {
-        $empresas=$this->getDoctrine()->getRepository(Empresa::class)->findAll();
+        $lista_empresas = $empresas->findAll();
 
         return $this->render('empresa/index.html.twig', [
-            'empresas' => $empresas,
+            'empresas' => $lista_empresas,
         ]);
     }
 
@@ -62,34 +67,37 @@ class EmpresaController extends AbstractController
     }
 
     /**
-     * @Route("/{id<\d+>}", methods={"GET"}, name="mostrar_empresa")
+     * @Route("/empresa/{id<\d+>}", methods={"GET"}, name="mostrar_empresa")
      */
-    public function mostrar(Empresa $empresa): Response
+    public function mostrar(Empresa $empresa, AlmacenRepository $almacenes, UsuarioRepository $usuarios): Response
     {
-        //$empresa=$this->getDoctrine()->getRepository(Empresa::class)->find($ruc);
+        $empresaAlmacenes = $almacenes->findBy(['empresaRuc' => $empresa]);
+        $empresaUsuarios = $usuarios->findBy(['empresaRuc' => $empresa]);
 
         return $this->render('empresa/mostrar.html.twig', [
             'empresa' => $empresa,
+            'almacenes' => $empresaAlmacenes,
+            'usuarios' => $empresaUsuarios,
         ]);
     }
 
-    ///**
-    // * @Route("/empresa/save", name="guardar_empresa")
-    // */
-    /*public function nuevaEmpresa()
+    /**
+     * @Route("/empresa/{id<\d+>}/editar",methods={"GET", "POST"}, name="editar_empresa")
+     */
+    public function editarEmpresa(Request $request, Empresa $empresa):Response
     {
-        //Entity Manager
-        $em=$this->getDoctrine()->getManager();
+        $form = $this->CreateForm(EmpresaType::class, $empresa);
+        $form->handleRequest($request);
 
-        //Creamos el objeto empresa
-        $empresa=new Empresa();
-        $empresa->setRuc('20458834001');
-        $empresa->setRazonSocial('System Server Peru');
+        if ($form->isSubmitted() && $form->isValid()){
+            $this->getDoctrine()->getManager()->flush();
 
-        //Guardamos en la base de datos
-        $em->persist($empresa);
-        $em->flush();
+            return $this->redirectToRoute('lista_empresas', ['id' => $empresa->getRuc()]);
+        }
 
-        return new Response('Se guardo la empresa: '.$empresa->getRazonSocial());
-    }*/
+        return $this->render( 'empresa/editar.html.twig', [
+            'empresa' => $empresa,
+            'form' => $form->createView(),
+        ]);
+    }
 }

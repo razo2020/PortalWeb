@@ -3,21 +3,23 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * Usuario
  *
  * @ORM\Table(name="usuario", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username", "Empresa_RUC"}), @ORM\UniqueConstraint(name="apodo_UNIQUE", columns={"apodo", "Empresa_RUC"})}, indexes={@ORM\Index(name="fk_user_Cargo1_idx", columns={"Cargo_idCargo"}), @ORM\Index(name="fk_user_Empresa1_idx", columns={"Empresa_RUC"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var string
      *
      * @ORM\Column(name="DNI", type="string", length=8, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $dni;
 
@@ -25,6 +27,7 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=16, nullable=false)
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -32,6 +35,8 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -39,8 +44,15 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=32, nullable=false)
+     * @Assert\NotBlank()
      */
     private $password;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @var \DateTime
@@ -75,7 +87,7 @@ class Usuario
      *
      * @ORM\Column(name="telefono1", type="string", length=15, nullable=true)
      */
-    private $telefono1;
+    private $telefono;
 
     /**
      * @var string
@@ -99,21 +111,32 @@ class Usuario
      *   @ORM\JoinColumn(name="Cargo_idCargo", referencedColumnName="idCargo")
      * })
      */
-    private $cargocargo;
+    private $cargo;
 
     /**
      * @var \Empresa
      *
-     * @ORM\ManyToOne(targetEntity="Empresa")
+     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="usuarios")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Empresa_RUC", referencedColumnName="RUC")
      * })
      */
-    private $empresaRuc;
+    private $empresa;
+
+    public function __construct()
+    {
+        $this->estado = true;
+    }
 
     public function getDni(): ?string
     {
         return $this->dni;
+    }
+
+    public function setDni(string $dni): self
+    {
+        $this->dni = $dni;
+        return $this;
     }
 
     public function getUsername(): ?string
@@ -200,14 +223,14 @@ class Usuario
         return $this;
     }
 
-    public function getTelefono1(): ?string
+    public function getTelefono(): ?string
     {
-        return $this->telefono1;
+        return $this->telefono;
     }
 
-    public function setTelefono1(?string $telefono1): self
+    public function setTelefono(?string $telefono): self
     {
-        $this->telefono1 = $telefono1;
+        $this->telefono = $telefono;
 
         return $this;
     }
@@ -236,30 +259,176 @@ class Usuario
         return $this;
     }
 
-    public function getCargocargo(): ?Cargo
+    public function getCargo(): ?Cargo
     {
-        return $this->cargocargo;
+        return $this->cargo;
     }
 
-    public function setCargocargo(?Cargo $cargocargo): self
+    public function setCargo(?Cargo $cargo): self
     {
-        $this->cargocargo = $cargocargo;
+        $this->cargo = $cargo;
 
         return $this;
     }
 
-    public function getEmpresaRuc(): ?Empresa
+    public function getEmpresa(): ?Empresa
     {
-        return $this->empresaRuc;
+        return $this->empresa;
     }
 
-    public function setEmpresaRuc(?Empresa $empresaRuc): self
+    public function setEmpresa(?Empresa $empresa): self
     {
-        $this->empresaRuc = $empresaRuc;
+        $this->empresa = $empresa;
 
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
 
+    public function setPlainPassword($password): self
+    {
+        $this->plainPassword = $password;
+        return $this;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->dni,
+            $this->username,
+            $this->password,
+            $this->estado,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->dni,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     *     public function getRoles()
+     *     {
+     *         return array('ROLE_USER');
+     *     }
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+        // TODO: Implement getRoles() method.
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return null;
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * Checks whether the user's account has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw an AccountExpiredException and prevent login.
+     *
+     * @return bool true if the user's account is non expired, false otherwise
+     *
+     * @see AccountExpiredException
+     */
+    public function isAccountNonExpired()
+    {
+        return true;
+        // TODO: Implement isAccountNonExpired() method.
+    }
+
+    /**
+     * Checks whether the user is locked.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a LockedException and prevent login.
+     *
+     * @return bool true if the user is not locked, false otherwise
+     *
+     * @see LockedException
+     */
+    public function isAccountNonLocked()
+    {
+        return true;
+        // TODO: Implement isAccountNonLocked() method.
+    }
+
+    /**
+     * Checks whether the user's credentials (password) has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a CredentialsExpiredException and prevent login.
+     *
+     * @return bool true if the user's credentials are non expired, false otherwise
+     *
+     * @see CredentialsExpiredException
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+        // TODO: Implement isCredentialsNonExpired() method.
+    }
+
+    /**
+     * Checks whether the user is enabled.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a DisabledException and prevent login.
+     *
+     * @return bool true if the user is enabled, false otherwise
+     *
+     * @see DisabledException
+     */
+    public function isEnabled()
+    {
+        return $this->estado;
+        // TODO: Implement isEnabled() method.
+    }
 }
 

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * PeticionOferta
  *
  * @ORM\Table(name="peticion_oferta")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PeticionOfertaRepository")
  */
 class PeticionOferta
 {

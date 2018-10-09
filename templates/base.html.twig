@@ -8,15 +8,17 @@
         <meta name="author" content="">
 
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <!-- Bootstrap core CSS-->
-        <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Custom fonts for this template-->
-        <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-        {% block stylesheets %}{% endblock %}
+        <link rel="shortcut icon" href="/favicon.ico">
+        {% block stylesheets %}
+            <!-- Bootstrap core CSS-->
+            <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <!-- Custom fonts for this template-->
+            <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+            <!-- Custom styles for this template-->
+            <link href="/css/sb-admin.css" rel="stylesheet">
+        {% endblock %}
 
-        <!-- Custom styles for this template-->
-        <link href="/css/sb-admin.css" rel="stylesheet">
     </head>
     <body class="fixed-nav sticky-footer bg-dark" id="page-top">
          {{  include('inc/menu.html.twig') }}
@@ -24,19 +26,15 @@
              {% block body %}{% endblock %}
              <!-- /.content-wrapper-->
              {{ include('inc/piepagina.html.twig') }}
-
-
          </div>
-         <!-- Bootstrap core JavaScript-->
-         <script src="/vendor/jquery/jquery.min.js"></script>
-         <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-         <!-- Core plugin JavaScript-->
-         <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-        <!-- Custom scripts for all pages-->
-        <script src="/js/sb-admin.min.js"></script>
-
-        {% block javascripts %}{% endblock %}
+         {% block javascripts %}
+             <!-- Bootstrap core JavaScript-->
+             <script src="/vendor/jquery/jquery.min.js"></script>
+             <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+             <!-- Core plugin JavaScript-->
+             <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+            <!-- Custom scripts for all pages-->
+            <script src="/js/sb-admin.min.js"></script>
+         {% endblock %}
     </body>
 </html>

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Almacen
  *
  * @ORM\Table(name="almacen", indexes={@ORM\Index(name="fk_Almacen_Empresa_idx", columns={"Empresa_RUC"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AlmacenRepository")
  */
 class Almacen
 {
@@ -47,15 +47,15 @@ class Almacen
     /**
      * @var \Empresa
      *
-     * @ORM\ManyToOne(targetEntity="Empresa")
+     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="almacenes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Empresa_RUC", referencedColumnName="RUC")
      * })
      */
-    private $empresaRuc;
+    private $empresa;
 
     /**
-     * @var \Ubicacion
+     * @var Ubicacion
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="almacen")
      */
@@ -107,14 +107,14 @@ class Almacen
         return $this;
     }
 
-    public function getEmpresaRuc(): ?Empresa
+    public function getEmpresa(): ?Empresa
     {
-        return $this->empresaRuc;
+        return $this->empresa;
     }
 
-    public function setEmpresaRuc(?Empresa $empresaRuc): self
+    public function setEmpresa(?Empresa $empresa): self
     {
-        $this->empresaRuc = $empresaRuc;
+        $this->empresa = $empresa;
 
         return $this;
     }

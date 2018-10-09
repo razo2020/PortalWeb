@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Ubicacion
  *
  * @ORM\Table(name="ubicacion", uniqueConstraints={@ORM\UniqueConstraint(name="ubicacion_UNIQUE", columns={"Almacen_idAlmacen", "ubicacion"})}, indexes={@ORM\Index(name="fk_Almacen_has_Material_Material1_idx", columns={"Material_idMaterial"}), @ORM\Index(name="fk_Almacen_has_Material_Almacen1_idx", columns={"Almacen_idAlmacen"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UbicacionRepository")
  */
 class Ubicacion
 {

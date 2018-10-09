@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Solped
  *
  * @ORM\Table(name="solped")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\SolpedRepository")
  */
 class Solped
 {

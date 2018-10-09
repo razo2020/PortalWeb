@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Material
  *
  * @ORM\Table(name="material", uniqueConstraints={@ORM\UniqueConstraint(name="MatNombre_UNIQUE", columns={"nombre"})}, indexes={@ORM\Index(name="fk_Material_Categoria1_idx", columns={"Categoria_idCategoria"}), @ORM\Index(name="fk_Material_UND_Medida1_idx", columns={"UND_Medida_idUND_Medida"})})
- * @ORM\Entity(repositoryClass="MaterialRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\MaterialRepository")
  */
 class Material
 {
@@ -209,6 +209,45 @@ class Material
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Ubicacion[]
+     */
+    public function getUbicaciones(): Collection
+    {
+        return $this->ubicaciones;
+    }
+
+    public function addUbicacione(Ubicacion $ubicacione): self
+    {
+        if (!$this->ubicaciones->contains($ubicacione)) {
+            $this->ubicaciones[] = $ubicacione;
+            $ubicacione->setMateriales($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUbicacione(Ubicacion $ubicacione): self
+    {
+        if ($this->ubicaciones->contains($ubicacione)) {
+            $this->ubicaciones->removeElement($ubicacione);
+            // set the owning side to null (unless already changed)
+            if ($ubicacione->getMateriales() === $this) {
+                $ubicacione->setMateriales(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DetalleSolped[]
+     */
+    public function getDetallesolped(): Collection
+    {
+        return $this->detallesolped;
     }
 
 }

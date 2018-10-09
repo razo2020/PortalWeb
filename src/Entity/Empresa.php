@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Empresa
  *
  * @ORM\Table(name="empresa")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\EmpresaRepository")
  */
 class Empresa
 {
@@ -69,6 +71,26 @@ class Empresa
      * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado = '1';
+
+    /**
+     * @var Almacen
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Almacen", mappedBy="empresa")
+     */
+    private $almacenes;
+
+    /**
+     * @var Usuario
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Usuario", mappedBy="empresa")
+     */
+    private $usuarios;
+
+    public function __construct()
+    {
+        $this->almacenes = new ArrayCollection();
+        $this->usuarios = new ArrayCollection();
+    }
 
     public function getRuc(): ?string
     {
@@ -162,6 +184,68 @@ class Empresa
     public function setEstado(string $estado): self
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Almacen[]
+     */
+    public function getAlmacenes(): Collection
+    {
+        return $this->almacenes;
+    }
+
+    public function addAlmacene(Almacen $almacene): self
+    {
+        if (!$this->almacenes->contains($almacene)) {
+            $this->almacenes[] = $almacene;
+            $almacene->setEmpresa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlmacene(Almacen $almacene): self
+    {
+        if ($this->almacenes->contains($almacene)) {
+            $this->almacenes->removeElement($almacene);
+            // set the owning side to null (unless already changed)
+            if ($almacene->getEmpresa() === $this) {
+                $almacene->setEmpresa(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Usuario[]
+     */
+    public function getUsuarios(): Collection
+    {
+        return $this->usuarios;
+    }
+
+    public function addUsuario(Usuario $usuario): self
+    {
+        if (!$this->usuarios->contains($usuario)) {
+            $this->usuarios[] = $usuario;
+            $usuario->setEmpresa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsuario(Usuario $usuario): self
+    {
+        if ($this->usuarios->contains($usuario)) {
+            $this->usuarios->removeElement($usuario);
+            // set the owning side to null (unless already changed)
+            if ($usuario->getEmpresa() === $this) {
+                $usuario->setEmpresa(null);
+            }
+        }
 
         return $this;
     }

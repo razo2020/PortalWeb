@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mantenimiento de Empresa{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/user/{id}">Tablero</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('lista_empresas') }}">Empresas</a>
+            </li>
+            <li class="breadcrumb-item active">Empresa</li>
+        </ol>
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">
+                <h5>
+                    <p class="text-center">{{ empresa.razonSocial }}
+                        <span class="small float-right text-muted">{{ empresa.Ruc }}</span>
+                    </p>
+                </h5>
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+
+                {{ form_row(form.razonSocial) }}
+                {{ form_row(form.direccion) }}
+                <div class="form-row">
+                    <div class="col-md-6">
+                        {{ form_row(form.telefono1) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.telefono2) }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        {{ form_row(form.rubro) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.tipo) }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save" aria-hidden="true"></i> Guardar cambios
+                </button>
+                <a href="{{ path('lista_empresas') }}" class="btn btn-link">
+                    <i class="fa fa-list-alt" aria-hidden="true"></i> Volver al listado de empresas
+                </a>
+                <div id="Invisible">{{ form_row(form.ruc, { attr: {class: 'hidden-row'}}) }}</div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var invisible = document.getElementById('Invisible');
+        invisible.style.visibility = 'hidden';
+    </script>
+{% endblock %}

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * DetallePeticionOferta
  *
  * @ORM\Table(name="detalle_peticion_oferta", indexes={@ORM\Index(name="fk_peticion_oferta_has_solped_has_Material_peticion_oferta1_idx", columns={"peticion_oferta_idpeticion_oferta"}), @ORM\Index(name="fk_Detalle_peticion_oferta_detalle_solped1_idx", columns={"detalle_solped_solped_idsolped", "detalle_solped_idposicion"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\DetallePeticionOfertaRepository")
  */
 class DetallePeticionOferta
 {
