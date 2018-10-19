@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Empresa;
 use App\Entity\Usuario;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -27,7 +26,8 @@ class UsuarioType extends AbstractType
                 'label' => 'Usuario:',
             ])
             ->add('email', EmailType::class,[
-                'label' => 'email:'
+                'label' => 'email:',
+                'required' => false,
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -36,6 +36,7 @@ class UsuarioType extends AbstractType
             ])
             ->add('apodo', TextType::class, [
                 'label' => 'Apodo:',
+                'required' => false,
             ])
             ->add('nombres', TextType::class,[
                 'label' => 'Nombres:'
@@ -44,7 +45,8 @@ class UsuarioType extends AbstractType
                 'label' => 'Apellidos:'
             ])
             ->add('telefono', NumberType::class, [
-                'label' => 'Telefono:'
+                'label' => 'Telefono:',
+                'required' => false,
             ])
             ->add('termsAccepted', CheckboxType::class, array(
                 'label' => 'Aceptar terminos',

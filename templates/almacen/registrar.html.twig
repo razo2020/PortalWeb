@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mantenimiento de Almacenes{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/user/{id}">Tablero</a>
+            </li>
+            <li class="breadcrumb-item">
+                {% if empresa %}
+                    <a href="{{ path('lista_almacenes',{id: empresa.ruc}) }}">Almacenes</a>
+                {% else %}
+                    <a href="#">Almacen</a>
+                {% endif %}
+            </li>
+            <li class="breadcrumb-item active">Almacen</li>
+        </ol>
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">
+                <h5>
+                    <p class="text-center">Registrar nuevo almacen</p>
+                </h5>
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+                {{ form_row(form.idalmacen) }}
+                {{ form_row(form.nombre) }}
+                {{ form_row(form.direccion) }}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save" aria-hidden="true"></i> Guardar
+                </button>
+                {{ form_widget(form.saveAndCreateNew, {label: 'Guardar y crear otro', attr: {class: 'btn btn-primary'}}) }}
+                <a href="{{ path('lista_almacenes',{id: empresa.ruc}) }}" class="btn btn-link">
+                    <i class="fa fa-list-alt" aria-hidden="true"></i> Volver al listado de Almacenes
+                </a>
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

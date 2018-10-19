@@ -73,14 +73,14 @@ class Empresa
     private $estado = '1';
 
     /**
-     * @var Almacen
+     * @var Almacen[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Almacen", mappedBy="empresa")
      */
     private $almacenes;
 
     /**
-     * @var Usuario
+     * @var Usuario[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Usuario", mappedBy="empresa")
      */

@@ -2,42 +2,58 @@
 
 namespace App\Controller;
 
+use App\Entity\Empresa;
 use App\Entity\Usuario;
 use App\Form\UsuarioType;
 use App\Repository\UsuarioRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Class UsuarioController
+ * @package App\Controller
+ * @Route(/usuario)
+ */
+
 class UsuarioController extends AbstractController
 {
     /**
-     * @Route("/usuario", defaults={"ruc": "0"}, methods={"GET"}, name="lista_usuarios")
+     * @Route("/{id<\d+>}", methods={"GET"}, name="lista_usuarios")
      *
      */
-    public function index(string $ruc, UsuarioRepository $usuarios):Response
+    public function index(Empresa $empresa, UsuarioRepository $usuarios):Response
     {
-        if ($ruc == 0){
+        if (isset($empresa)){
             $listausuarios = $usuarios->findAll();
         }else{
-            $listausuarios = $usuarios->findBy(['empresaRuc' => $ruc]);
+            $listausuarios = $empresa->getUsuarios();
         }
 
         return $this->render('usuario/index.html.twig', [
-            'lista_usuarios' => $listausuarios,
+            'usuarios' => $listausuarios,
+            'empresa' => $empresa,
         ]);
     }
 
     /**
-     * @Route("/registrar", name="registrar_usuario")
+     * @Route("/{rucEmpresa}/nuevo", methods={"GET","POST"}, name="registrar_usuario")
+     * @ParamConverter("empresa", options={"mapping": {"rucEmpresa": "ruc"}})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function register(Empresa $empresa, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         // 1) build the form
         $user = new Usuario();
-        $form = $this->createForm(UsuarioType::class, $user);
+        if(isset($empresa)){
+            $empresa->addUsuario($user);
+        }
+
+        $form = $this->createForm(UsuarioType::class, $user)
+            ->add('saveAndCreateNew', SubmitType::class);
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
@@ -55,12 +71,16 @@ class UsuarioController extends AbstractController
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
 
-            return $this->redirectToRoute('home');
+            if ($form->get('saveAndCreateNew')->isClicked()) {
+                return $this->redirectToRoute('registrar_usuario',['rucEmpresa' => $empresa->getRuc()]);
+            }
+
+            return $this->redirectToRoute('lista_usuarios',['id' => $empresa->getRuc()]);
         }
 
         return $this->render(
             'usuario/registrar.html.twig',
-            array('form' => $form->createView())
+            array('form' => $form->createView(), 'empresa' => $empresa)
         );
     }
 }

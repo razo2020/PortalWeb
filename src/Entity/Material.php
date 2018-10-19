@@ -67,7 +67,7 @@ class Material
     /**
      * @var \Ubicacion
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="materiales")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="material")
      */
     private $ubicaciones;
 
@@ -161,7 +161,7 @@ class Material
     {
         if (!$this->ubicaciones->contains($ubicacion)) {
             $this->ubicaciones[] = $ubicacion;
-            $ubicacion->setMateriales($this);
+            $ubicacion->setMaterial($this);
         }
 
         return $this;
@@ -172,8 +172,8 @@ class Material
         if ($this->ubicaciones->contains($ubicacion)) {
             $this->ubicaciones->removeElement($ubicacion);
             // set the owning side to null (unless already changed)
-            if ($ubicacion->getMateriales() === $this) {
-                $ubicacion->setMateriales(null);
+            if ($ubicacion->getMaterial() === $this) {
+                $ubicacion->setMaterial(null);
             }
         }
 
@@ -223,7 +223,7 @@ class Material
     {
         if (!$this->ubicaciones->contains($ubicacione)) {
             $this->ubicaciones[] = $ubicacione;
-            $ubicacione->setMateriales($this);
+            $ubicacione->setMaterial($this);
         }
 
         return $this;
@@ -234,8 +234,8 @@ class Material
         if ($this->ubicaciones->contains($ubicacione)) {
             $this->ubicaciones->removeElement($ubicacione);
             // set the owning side to null (unless already changed)
-            if ($ubicacione->getMateriales() === $this) {
-                $ubicacione->setMateriales(null);
+            if ($ubicacione->getMaterial() === $this) {
+                $ubicacione->setMaterial(null);
             }
         }
 

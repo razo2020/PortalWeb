@@ -9,17 +9,31 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 /**
  * Usuario
  *
- * @ORM\Table(name="usuario", uniqueConstraints={@ORM\UniqueConstraint(name="username_UNIQUE", columns={"username", "Empresa_RUC"}), @ORM\UniqueConstraint(name="apodo_UNIQUE", columns={"apodo", "Empresa_RUC"})}, indexes={@ORM\Index(name="fk_user_Cargo1_idx", columns={"Cargo_idCargo"}), @ORM\Index(name="fk_user_Empresa1_idx", columns={"Empresa_RUC"})})
+ * @ORM\Table(name="usuario", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="username_UNIQUE", columns={"username", "Empresa_RUC"}),
+ *     @ORM\UniqueConstraint(name="apodo_UNIQUE", columns={"apodo", "Empresa_RUC"}),
+ *     @ORM\UniqueConstraint(name="DNI_UNIQUE", columns={"RUC", "Empresa_RUC"})
+ * }, indexes={
+ *     @ORM\Index(name="fk_user_Cargo1_idx", columns={"Cargo_idCargo"}),
+ *     @ORM\Index(name="fk_user_Empresa1_idx", columns={"Empresa_RUC"})})
  * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
  */
 class Usuario implements AdvancedUserInterface, \Serializable
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="usuarioid", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="DNI", type="string", length=8, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
      */
     private $dni;
 
@@ -35,7 +49,6 @@ class Usuario implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
@@ -43,8 +56,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=32, nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="password", type="string", length=64, nullable=false)
      */
     private $password;
 
@@ -59,7 +71,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="fechaCreacion", type="datetime", nullable=true)
      */
-    private $fechacreacion = 'CURRENT_TIMESTAMP';
+    private $fechacreacion;
 
     /**
      * @var string
@@ -125,6 +137,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
 
     public function __construct()
     {
+        $this->fechacreacion = new \DateTime();
         $this->estado = true;
     }
 
@@ -429,6 +442,11 @@ class Usuario implements AdvancedUserInterface, \Serializable
     {
         return $this->estado;
         // TODO: Implement isEnabled() method.
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 }
 

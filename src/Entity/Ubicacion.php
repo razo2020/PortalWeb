@@ -52,7 +52,7 @@ class Ubicacion
     private $estado = '1';
 
     /**
-     * @var \Almacen
+     * @var Almacen
      *
      * @ORM\ManyToOne(targetEntity="Almacen", inversedBy="ubicaciones")
      * @ORM\JoinColumns({
@@ -62,17 +62,17 @@ class Ubicacion
     private $almacen;
 
     /**
-     * @var \Material
+     * @var Material
      *
      * @ORM\ManyToOne(targetEntity="Material", inversedBy="$ubicaciones")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Material_idMaterial", referencedColumnName="idMaterial")
      * })
      */
-    private $materiales;
+    private $material;
 
     /**
-     * @var \DetalleReserva
+     * @var DetalleReserva[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\DetalleReserva", mappedBy="ubicacion")
      */
@@ -148,14 +148,14 @@ class Ubicacion
         return $this;
     }
 
-    public function getMateriales(): ?Material
+    public function getMaterial(): ?Material
     {
-        return $this->materiales;
+        return $this->material;
     }
 
-    public function setMateriales(?Material $materiales): self
+    public function setMaterial(?Material $material): self
     {
-        $this->materiales = $materiales;
+        $this->material = $material;
 
         return $this;
     }
@@ -190,30 +190,6 @@ class Ubicacion
 
         return $this;
     }
-
-    public function addDetallesreserva(DetalleReserva $detallesreserva): self
-    {
-        if (!$this->detallesreservas->contains($detallesreserva)) {
-            $this->detallesreservas[] = $detallesreserva;
-            $detallesreserva->setUbicacion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDetallesreserva(DetalleReserva $detallesreserva): self
-    {
-        if ($this->detallesreservas->contains($detallesreserva)) {
-            $this->detallesreservas->removeElement($detallesreserva);
-            // set the owning side to null (unless already changed)
-            if ($detallesreserva->getUbicacion() === $this) {
-                $detallesreserva->setUbicacion(null);
-            }
-        }
-
-        return $this;
-    }
-
 
 }
 

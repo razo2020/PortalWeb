@@ -1,20 +1,83 @@
-{% extends 'base.html.twig' %}
+{% extends 'inc/tablas.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}Mantenimiento de Almacenes{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Tablero</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('mostrar_empresa',{ id: empresa.ruc }) }}">Empresa</a>
+            </li>
+            <li class="breadcrumb-item active">Almacenes</li>
+        </ol>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <!-- Example DataTables Card-->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Almacenes <a href="{{ path('registrar_almacen',{rucEmpresa: empresa.ruc}) }}"> <span class="small float-right">Agregar</span> </a>
+            </div>
+            <div class="card-body">
+                {% if almacenes %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-middle-aligned"  id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>ID Almacen</th>
+                                <th>Nombre</th>
+                                <th class="text-center"><i class="fa fa-fw fa-cogs"></i>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>ID Almacen</th>
+                                <th>Nombre</th>
+                                <th class="text-center"><i class="fa fa-fw fa-cogs"></i>Acciones</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {% for almacen in almacenes %}
+                                <tr>
+                                    <td>{{ almacen.idalmacen }}</td>
+                                    <td>{{ almacen.nombre }}</td>
+                                    <td class="text-center">
+                                        <div class="item-actions">
+                                            <a href="#" class="btn btn-sm btn-secondary">
+                                                <i class="fa fa-eye" aria-hidden="true"></i> ver
+                                            </a>
+                                            <a href="#" class="btn btn-sm btn-dark">
+                                                <i class="fa fa-edit" aria-hidden="true"></i> editar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p> No existe almacenes para visualizar ...</p>
+                {% endif %}
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'src/Controller/AlmacenController.php'|file_link(0) }}">src/Controller/ElmacenController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'templates/almacen/index.html.twig'|file_link(0) }}">templates/almacen/index.html.twig</a></code></li>
-    </ul>
-</div>
+            {% if app.flashes('notice') %}
+                {# you can read and display just one flash message type... #}
+                {% for message in app.flashes('notice') %}
+                    <div class="card-footer small text-muted">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="card-footer small text-muted">
+                    Mantenimiento de almacenes ....
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
 {% endblock %}
+

@@ -62,14 +62,9 @@
                                     <i class="fa fa-fw fa-comments"></i>
                                 </div>
                                 <div class="mr-5">
-                                    {% if usuarios %}
-                                        <?php count(usuarios) ?>
-                                        {% else %}
-                                        0
-                                    {% endif %}
-                                    Usuarios!</div>
+                                    {{ empresa.usuarios|length }} Usuarios!</div>
                             </div>
-                            <a class="card-footer text-white clearfix small z-1" href="{{ path('lista_usuarios', {ruc: empresa.Ruc}) }}">
+                            <a class="card-footer text-white clearfix small z-1" href="{{ path('lista_usuarios', {id: empresa.ruc}) }}">
                                 <span class="float-left">Ver usuarios</span>
                                 <span class="float-right">
                                     <i class="fa fa-angle-right"></i>
@@ -84,14 +79,9 @@
                                     <i class="fa fa-fw fa-list"></i>
                                 </div>
                                 <div class="mr-5">
-                                    {% if almacenes %}
-                                        <?php count(almacenes) ?>
-                                    {% else %}
-                                        0
-                                    {% endif %}
-                                    Almacenes!</div>
+                                    {{ empresa.almacenes|length }} Almacenes!</div>
                             </div>
-                            <a class="card-footer text-white clearfix small z-1" href="{{ path('lista_almacenes') }}">
+                            <a class="card-footer text-white clearfix small z-1" href="{{ path('lista_almacenes', {id: empresa.ruc}) }}">
                                 <span class="float-left">Ver Almacenes</span>
                                 <span class="float-right">
                                     <i class="fa fa-angle-right"></i>

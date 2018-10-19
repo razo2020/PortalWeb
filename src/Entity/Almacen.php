@@ -19,7 +19,7 @@ class Almacen
      *
      * @ORM\Column(name="idAlmacen", type="string", length=12, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $idalmacen;
 
@@ -55,7 +55,7 @@ class Almacen
     private $empresa;
 
     /**
-     * @var Ubicacion
+     * @var Ubicacion[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="almacen")
      */
@@ -69,6 +69,13 @@ class Almacen
     public function getIdalmacen(): ?string
     {
         return $this->idalmacen;
+    }
+
+    public function setIdalmacen(string $idalmacen): self
+    {
+        $this->idalmacen = $idalmacen;
+
+        return $this;
     }
 
     public function getNombre(): ?string
@@ -137,7 +144,7 @@ class Almacen
         return $this;
     }
 
-    public function removeUbicacione(Ubicacion $ubicacion): self
+    public function removeUbicacion(Ubicacion $ubicacion): self
     {
         if ($this->ubicaciones->contains($ubicacion)) {
             $this->ubicaciones->removeElement($ubicacion);
@@ -149,17 +156,6 @@ class Almacen
 
         return $this;
     }
-
-    public function addUbicacione(Ubicacion $ubicacione): self
-    {
-        if (!$this->ubicaciones->contains($ubicacione)) {
-            $this->ubicaciones[] = $ubicacione;
-            $ubicacione->setAlmacen($this);
-        }
-
-        return $this;
-    }
-
 
 }
 
