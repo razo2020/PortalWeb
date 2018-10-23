@@ -1,40 +1,47 @@
+{% import "macros.html.twig" as macros %}
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="{% block description %}{{ 'description' | trans }}{% endblock %}">
+        <meta name="author" content="{% block author %}{% endblock %}">
+        <title>{% block title %}{{ 'title.homepage' | trans }}{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        {{ include('BraincraftedBootstrapBundle/ie8-support.html.twig') }}
 
-        <title>{% block title %}Welcome!{% endblock %}</title>
-
-        <link rel="shortcut icon" href="/favicon.ico">
         {% block stylesheets %}
             <!-- Bootstrap core CSS-->
-            <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
             <!-- Custom fonts for this template-->
-            <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+            <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
             <!-- Custom styles for this template-->
-            <link href="/css/sb-admin.css" rel="stylesheet">
+            <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
         {% endblock %}
 
     </head>
-    <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <body class="fixed-nav sticky-footer bg-dark" id="page-top">#}
          {{  include('inc/menu.html.twig') }}
          <div class="content-wrapper">
+             <div class="container-fluid">
+             {% block flash %}{{ include('BraincraftedBootstrapBundle/flash.html.twig', {'close': true}) }}{% endblock %}
              {% block body %}{% endblock %}
              <!-- /.content-wrapper-->
              {{ include('inc/piepagina.html.twig') }}
+             </div>
          </div>
+         <!-- /#wrapper -->
+
+
          {% block javascripts %}
              <!-- Bootstrap core JavaScript-->
-             <script src="/vendor/jquery/jquery.min.js"></script>
-             <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+             <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+             <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
              <!-- Core plugin JavaScript-->
-             <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+             <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
             <!-- Custom scripts for all pages-->
-            <script src="/js/sb-admin.min.js"></script>
+            <script src="{{ asset('js/sb-admin.min.js') }}"></script>
          {% endblock %}
     </body>
 </html>

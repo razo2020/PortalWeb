@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Almacen;
-use App\Entity\Ubicacion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -24,19 +23,6 @@ class AlmacenType extends AbstractType
             ])
             ->add('direccion', TextType::class,[
                 'label' => 'Dirección o lugar de almacén:'
-            ])
-            ->add('ubicaciones', CollectionType::class, [
-                'label'        => 'Ubicación',
-                'entry_type'   => Ubicacion::class,
-                'allow_add'    => true,
-                'allow_delete' => true,
-                'prototype'    => true,
-                'required'     => false,
-                'by_reference' => true,
-                'delete_empty' => true,
-                'attr'         => [
-                    'class' => 'collection',
-                ],
             ])
         ;
     }

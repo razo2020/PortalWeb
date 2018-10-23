@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * Class UsuarioController
  * @package App\Controller
- * @Route(/usuario)
+ * @Route("/usuario")
  */
 
 class UsuarioController extends AbstractController

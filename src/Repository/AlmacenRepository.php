@@ -27,13 +27,4 @@ class AlmacenRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Almacen::class);
     }
-
-    public function obtenerAlmacenes(string $ruc)
-    {
-        $qb = $this->createQueryBuilder('a')
-            ->addSelect('r')
-            ->where('a.Empresa_RUC = :ruc')
-            ->setParameter('ruc',$ruc);
-        return $qb->getQuery()->getResult();
-    }
 }

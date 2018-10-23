@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Almacen;
 use App\Entity\Empresa;
+use App\Entity\Ubicacion;
 use App\Form\AlmacenType;
+use App\Form\AlmUbiType;
 use App\Repository\AlmacenRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,7 +46,7 @@ class AlmacenController extends AbstractController
      * @Route("/{rucEmpresa}/nuevo", methods={"GET","POST"}, name="registrar_almacen")
      * @ParamConverter("empresa", options={"mapping": {"rucEmpresa": "ruc"}})
      */
-    public function register(Empresa $empresa, Request $request)
+    public function register(Empresa $empresa, Request $request):Response
     {
         // 1) build the form
         $almacen = new Almacen();
@@ -76,6 +79,27 @@ class AlmacenController extends AbstractController
             'almacen/registrar.html.twig',
             array('form' => $form->createView(), 'empresa' => $empresa)
         );
+    }
+
+    /**
+     * @Route("/{idAlmacen}/ubicacion", methods={"GET","POST"}, name="ubicaciones_lista")
+     * @ParamConverter("almacen", options={"mapping": {"idAlmacen": "idalmacen"}})
+     * @Template()
+     */
+    public function nuevaUbicacion(Request $request, Almacen $almacen):Response
+    {
+        $form = $this->createForm(AlmUbiType::class, $almacen);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($almacen);
+            $em->flush();
+        }
+        return $this->render('ubicacion/index.html.twig',[
+            'ubicaciones' => $almacen->getUbicaciones(),
+            'almacen' => $almacen,
+            'form' => $form->createView(),
+        ]);
     }
 
 }

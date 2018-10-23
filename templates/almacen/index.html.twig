@@ -3,7 +3,7 @@
 {% block title %}Mantenimiento de Almacenes{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
+
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -45,7 +45,7 @@
                                     <td>{{ almacen.nombre }}</td>
                                     <td class="text-center">
                                         <div class="item-actions">
-                                            <a href="#" class="btn btn-sm btn-secondary">
+                                            <a href="{{ path('ubicaciones_lista',{idAlmacen: almacen.idalmacen}) }}" class="btn btn-sm btn-secondary">
                                                 <i class="fa fa-eye" aria-hidden="true"></i> ver
                                             </a>
                                             <a href="#" class="btn btn-sm btn-dark">
@@ -76,8 +76,6 @@
                 </div>
             {% endif %}
         </div>
-
-    </div>
 
 {% endblock %}
 
