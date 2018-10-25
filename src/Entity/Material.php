@@ -67,7 +67,7 @@ class Material
     /**
      * @var \Ubicacion
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="material")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="material", cascade={"persist"})
      */
     private $ubicaciones;
 
@@ -152,7 +152,7 @@ class Material
     /**
      * @return Collection|Ubicacion[]
      */
-    public function getUbicacion(): Collection
+    public function getUbicaciones(): Collection
     {
         return $this->ubicaciones;
     }
@@ -211,44 +211,4 @@ class Material
         return $this;
     }
 
-    /**
-     * @return Collection|Ubicacion[]
-     */
-    public function getUbicaciones(): Collection
-    {
-        return $this->ubicaciones;
-    }
-
-    public function addUbicacione(Ubicacion $ubicacione): self
-    {
-        if (!$this->ubicaciones->contains($ubicacione)) {
-            $this->ubicaciones[] = $ubicacione;
-            $ubicacione->setMaterial($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUbicacione(Ubicacion $ubicacione): self
-    {
-        if ($this->ubicaciones->contains($ubicacione)) {
-            $this->ubicaciones->removeElement($ubicacione);
-            // set the owning side to null (unless already changed)
-            if ($ubicacione->getMaterial() === $this) {
-                $ubicacione->setMaterial(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|DetalleSolped[]
-     */
-    public function getDetallesolped(): Collection
-    {
-        return $this->detallesolped;
-    }
-
 }
-

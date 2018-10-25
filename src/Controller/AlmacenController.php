@@ -91,6 +91,9 @@ class AlmacenController extends AbstractController
         $form = $this->createForm(AlmUbiType::class, $almacen);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            foreach ($almacen->getUbicaciones() as $ubicacion){
+                $ubicacion->setAlmacen($almacen);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($almacen);
             $em->flush();

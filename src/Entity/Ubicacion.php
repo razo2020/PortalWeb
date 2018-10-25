@@ -54,7 +54,7 @@ class Ubicacion
     /**
      * @var Almacen
      *
-     * @ORM\ManyToOne(targetEntity="Almacen", inversedBy="ubicaciones")
+     * @ORM\ManyToOne(targetEntity="Almacen", inversedBy="ubicaciones", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Almacen_idAlmacen", referencedColumnName="idAlmacen")
      * })
@@ -64,7 +64,7 @@ class Ubicacion
     /**
      * @var Material
      *
-     * @ORM\ManyToOne(targetEntity="Material", inversedBy="$ubicaciones")
+     * @ORM\ManyToOne(targetEntity="Material", inversedBy="$ubicaciones", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Material_idMaterial", referencedColumnName="idMaterial")
      * })

@@ -1,0 +1,170 @@
+{% extends '/inc/tablas.html.twig' %}
+
+{% block title %}Configuraciones globales{% endblock %}
+
+{% block body %}
+    <h1>{{ block('title') }}</h1>
+    <hr>
+    <div class="row">
+        <div class="col-xl-6 col-sm-12 mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Categorias
+                <a href="#" data-toggle="modal" data-target="#modalCat"> <span class="small float-right">Agregar</span> </a>
+            </div>
+            <div class="card-body">
+                    {% if categorias %}
+                        <table id="tablaSelec1" class="table table-striped table-middle-aligned" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Identificador</th>
+                                <th>Nombre</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Identificador</th>
+                                <th>Nombre</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {% for categoria in categorias %}
+                                <tr>
+                                    <td>{{ categoria.idcategoria }}</td>
+                                    <td>{{ categoria.nombre}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p> No existe categorias para visualizar ...</p>
+                    {% endif %}
+                </div>
+        </div>
+        <div class="col-xl-6 col-sm-12 mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Unidades de Medidas
+                <a href="#" data-toggle="modal" data-target="#modalUnd"> <span class="small float-right">Agregar</span> </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    {% if unds %}
+                        <table class="table-multi table table-striped table-middle-aligned" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Abreviatura</th>
+                                <th>Nombre</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Abreviatura</th>
+                                <th>Nombre</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {% for und in unds %}
+                                <tr>
+                                    <td>{{ und.idundMedida }}</td>
+                                    <td>{{ und.nombre}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p> No existe und medida para visualizar ...</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unidades Modal-->
+    <div class="modal fade" id="modalUnd" tabindex="-1" role="dialog" aria-labelledby="modalUndLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header badge-primary">
+                    <h5 class="modal-title" id="modalUndLabel">Creando Und de Medida</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(formUnd) }}
+                    <div class="form-row">
+                        <div class="col-xl-3 col-sm-12 mb-3">
+                            {{ form_row(formUnd.idundMedida) }}
+                        </div>
+                        <div class="col-xl-9 col-sm-12 mb-3">
+                            {{ form_row(formUnd.nombre) }}
+                        </div>
+                    </div>
+                    {{ form_row(formUnd.descripcion) }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save" aria-hidden="true"></i> Guardar
+                    </button>
+                    {{ form_end(formUnd) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categoria Modal-->
+    <div class="modal fade" id="modalCat" tabindex="-1" role="dialog" aria-labelledby="modalCatLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header badge-primary">
+                    <h5 class="modal-title" id="modalCatLabel">Creando Categoria</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(formCat) }}
+                    <div class="form-row">
+                        <div class="col-xl-4 col-sm-12 mb-3">
+                            {{ form_row(formCat.idcategoria) }}
+                        </div>
+                        <div class="col-xl-8 col-sm-12 mb-3">
+                            {{ form_row(formCat.nombre) }}
+                        </div>
+                    </div>
+                    {{ form_row(formCat.descripcion) }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save" aria-hidden="true"></i> Guardar
+                    </button>
+                    {{ form_end(formCat) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+    <script type="text/javascript">
+        let table = $('#tablaSelec1').DataTable({
+            language: {
+                url: 'localisation/Spanish.json'
+            }
+        });
+
+        $('#tablaSelec1 tbody').on( 'click', 'tr', function () {
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        } );
+
+        $('#button').click( function () {
+            table.row('.selected').remove().draw( false );
+        } );
+    </script>
+{% endblock %}

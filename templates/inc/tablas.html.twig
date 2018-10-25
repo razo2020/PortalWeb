@@ -5,7 +5,8 @@
 {% block stylesheets %}
     {{ parent() }}
     <!-- Page level plugin CSS-->
-    <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="/vendor/datatables/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="/vendor/datatables/css/select.bootstrap4.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -15,8 +16,10 @@
 {% block javascripts %}
     {{ parent() }}
     <!-- Page level plugin JavaScript-->
-    <script src="/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/vendor/datatables/js/jquery.dataTables.js"></script>
+    <script src="/vendor/datatables/js/dataTables.bootstrap4.js"></script>
+    <script src="/vendor/datatables/js/dataTables.select.js"></script>
+    <script src="/vendor/datatables/js/select.bootstrap4.js"></script>
     <!-- Custom scripts for this page-->
     <script src="/js/sb-admin-datatables.js"></script>
 {% endblock %}

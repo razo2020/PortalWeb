@@ -17,7 +17,7 @@ class Categoria
      *
      * @ORM\Column(name="idCategoria", type="string", length=15, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $idcategoria;
 
@@ -45,6 +45,13 @@ class Categoria
     public function getIdcategoria(): ?string
     {
         return $this->idcategoria;
+    }
+
+    public function setIdcategoria(string $idcategoria): self
+    {
+        $this->idcategoria = $idcategoria;
+
+        return $this;
     }
 
     public function getNombre(): ?string

@@ -17,6 +17,7 @@ class AlmUbiType extends AbstractType
             ->add('ubicaciones', CollectionType::class, [
                 'label'        => 'Ubicación',
                 'entry_type'   => UbicacionType::class,
+                'entry_options' => array('label' => false),
                 'allow_add'    => true,
                 'allow_delete' => true,
                 'prototype'    => true,

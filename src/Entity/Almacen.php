@@ -57,7 +57,7 @@ class Almacen
     /**
      * @var Ubicacion[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="almacen")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="almacen", cascade={"persist"})
      */
     private $ubicaciones;
 

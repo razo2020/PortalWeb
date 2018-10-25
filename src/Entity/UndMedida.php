@@ -17,7 +17,7 @@ class UndMedida
      *
      * @ORM\Column(name="idUND_Medida", type="string", length=3, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $idundMedida;
 
@@ -45,6 +45,13 @@ class UndMedida
     public function getIdundMedida(): ?string
     {
         return $this->idundMedida;
+    }
+
+    public function setIdundMedida(string $idundMedida): self
+    {
+        $this->idundMedida = $idundMedida;
+
+        return $this;
     }
 
     public function getNombre(): ?string
