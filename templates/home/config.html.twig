@@ -9,6 +9,7 @@
         <div class="col-xl-6 col-sm-12 mb-3">
             <div class="card-header">
                 <i class="fa fa-table"></i> Categorias
+                <a id="button" type="button" class="btn btn-danger">editar</a>
                 <a href="#" data-toggle="modal" data-target="#modalCat"> <span class="small float-right">Agregar</span> </a>
             </div>
             <div class="card-body">
@@ -145,7 +146,7 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
     <script type="text/javascript">
         let table = $('#tablaSelec1').DataTable({
             language: {
@@ -164,7 +165,18 @@
         } );
 
         $('#button').click( function () {
-            table.row('.selected').remove().draw( false );
+            var id = table.row('.selected').data()[0];
+            var uri = '{{ path('configCat', {'idCat' : 'a'}) }}';
+            var url = 'http://portalweb.test' + uri.substr(0, uri.length -1 ) + encodeURIComponent(id);
+            console.log(url);
+            $.ajax({url: url, success: function(){
+                console.log("ajax echo");
+                    {% set formCat = formCat %}
+                    $('#modalCat').show();
+            }});
         } );
     </script>
 {% endblock %}
+{#/*var uri = '{{ path('configCat', {'id' : 'a'}) }}';
+            document.location = uri.substr(0, uri.length -1 ) + encodeURIComponent(row);*/
+            #}

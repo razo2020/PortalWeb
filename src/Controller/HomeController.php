@@ -80,39 +80,21 @@ class HomeController extends AbstractController
     }*/
 
     /**
-     * @Route("/config/{id<[1-9]\d*>}", methods={"GET", "POST"}, name="configCat")
+     * @Route("/config/{idCat}", methods={"GET", "POST"}, name="configCat")
+     * @ParamConverter("categoria", options={"mapping": {"idCat": "idcategoria"}})
      */
-    public function ediCat( Categoria $categoria, Request $request,CategoriaRepository $categoriaRepository, UndMedidaRepository $medidaRepository): Response
+    public function ediCat( Categoria $categoria, Request $request): Response
     {
-        $categorias = $categoriaRepository->findAll();
-        $unds = $medidaRepository->findAll();
-        if (!isset($categoria)){
-            $categoria = new Categoria();
-        }
-        if (!isset($undMedida)){
-            $undMedida = new UndMedida();
-        }
         $formCat = $this->createForm(CategoriaType::class, $categoria);
         $formCat->handleRequest($request);
-        $formUND = $this->createForm(UndMedidaType::class, $undMedida);
-        $formUND->handleRequest($request);
         if ($formCat->isSubmitted() && $formCat->isValid()){
             $em = $this->getDoctrine()->getManager();
             $em->persist($categoria);
             $em->flush();
             return $this->redirectToRoute('config');
         }
-        if ($formUND->isSubmitted() && $formUND->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($undMedida);
-            $em->flush();
-            return $this->redirectToRoute('config');
-        }
         return $this->render('home/config.html.twig',[
             'formCat' => $formCat->createView(),
-            'formUnd' => $formUND->createView(),
-            'categorias' => $categorias,
-            'unds' => $unds,
         ]);
     }
 
