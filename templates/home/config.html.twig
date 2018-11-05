@@ -9,37 +9,25 @@
         <div class="col-xl-6 col-sm-12 mb-3">
             <div class="card-header">
                 <i class="fa fa-table"></i> Categorias
-                <a id="button" type="button" class="btn btn-danger">editar</a>
                 <a href="#" data-toggle="modal" data-target="#modalCat"> <span class="small float-right">Agregar</span> </a>
             </div>
             <div class="card-body">
-                    {% if categorias %}
-                        <table id="tablaSelec1" class="table table-striped table-middle-aligned" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>Identificador</th>
-                                <th>Nombre</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Identificador</th>
-                                <th>Nombre</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            {% for categoria in categorias %}
-                                <tr>
-                                    <td>{{ categoria.idcategoria }}</td>
-                                    <td>{{ categoria.nombre}}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    {% else %}
-                        <p> No existe categorias para visualizar ...</p>
-                    {% endif %}
-                </div>
+                <table id="tablaSelec1" class="table table-striped table-middle-aligned" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Identificador</th>
+                        <th>Nombre</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Identificador</th>
+                        <th>Nombre</th>
+                    </tr>
+                    </tfoot>
+
+                </table>
+            </div>
         </div>
         <div class="col-xl-6 col-sm-12 mb-3">
             <div class="card-header">
@@ -47,34 +35,20 @@
                 <a href="#" data-toggle="modal" data-target="#modalUnd"> <span class="small float-right">Agregar</span> </a>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    {% if unds %}
-                        <table class="table-multi table table-striped table-middle-aligned" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>Abreviatura</th>
-                                <th>Nombre</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Abreviatura</th>
-                                <th>Nombre</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            {% for und in unds %}
-                                <tr>
-                                    <td>{{ und.idundMedida }}</td>
-                                    <td>{{ und.nombre}}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    {% else %}
-                        <p> No existe und medida para visualizar ...</p>
-                    {% endif %}
-                </div>
+                <table id="tablaSelec2" class="table table-striped table-middle-aligned" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Abreviatura</th>
+                        <th>Nombre</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Abreviatura</th>
+                        <th>Nombre</th>
+                    </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
@@ -84,7 +58,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header badge-primary">
-                    <h5 class="modal-title" id="modalUndLabel">Creando Und de Medida</h5>
+                    <h5 class="modal-title" id="modalUndLabel">Creando Unidad de Medida</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -133,6 +107,7 @@
                         </div>
                     </div>
                     {{ form_row(formCat.descripcion) }}
+
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
@@ -144,39 +119,160 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Categoria Editar-->
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header badge-primary">
+                    <h5 class="modal-title" id="modalEditLabel">Modificando Categoria</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form id="formEdit" name="formEdit" method="post">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-xl-4 col-sm-12 mb-3">
+                            <label for="id_edit" id="id_edit_label" class="required">#: </label>
+                            <input type="text" id="id_edit" required="required" class="form-control" />
+                        </div>
+                        <div class="form-group col-xl-8 col-sm-12 mb-3">
+                            <label for="edit_nombre" class="required">Nombre:</label>
+                            <input type="text" id="edit_nombre" name="nombre" required="required" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_descripcion">Descripción:</label>
+                        <textarea id="edit_descripcion" name="descripcion" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save" aria-hidden="true"></i> Guardar
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+
+        let tableUnd = $('#tablaSelec2').DataTable({
+            language: {
+                url: 'localisation/Spanish.json'
+            },
+            ajax: {
+                url: '{{ path('unidades') }}',
+                dataSrc: ''
+            },
+            columns: [
+                {'data': 'idundMedida'},
+                {'data': 'nombre'},
+            ]
+        });
+
         let table = $('#tablaSelec1').DataTable({
             language: {
                 url: 'localisation/Spanish.json'
+            },
+            ajax: {
+                url: '{{ path('categorias') }}',
+                dataSrc: ''
+            },
+            columns: [
+                {'data': 'idcategoria'},
+                {'data': 'nombre'},
+            ]
+        });
+
+        let ban = 0;
+
+        $('#tablaSelec2 tbody').on( 'dblclick', 'tr', function () {
+            tableUnd.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            ban = 2;
+            $('#modalEdit').modal('show');
+        } );
+
+        $('#tablaSelec1 tbody').on( 'dblclick', 'tr', function () {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+
+            ban = 1;
+            $('#modalEdit').modal('show');
+        } );
+
+        $('#modalEdit').on('show.bs.modal', function (e) {
+            if (ban === 1){
+                var categoria = table.row('.selected').data();
+                $('#modalEditLabel').html("Modificar Categoria");
+                $('#id_edit_label').html("Identificador:")
+                $('#id_edit').attr("name","idCategoria");
+                $('#id_edit').val(categoria["idcategoria"]);
+                $('#edit_nombre').val(categoria['nombre']);
+                $('#edit_descripcion').val(categoria['descripcion']);
+            }
+            if (ban == 2){
+                var undmedida = tableUnd.row('.selected').data();
+                $('#modalEditLabel').html("Modificar Unidad de Medida");
+                $('#id_edit_label').html("Abreviatura:")
+                $('#id_edit').attr("name","idundMedida");
+                $('#id_edit').val(undmedida["idundMedida"]);
+                $('#edit_nombre').val(undmedida['nombre']);
+                $('#edit_descripcion').val(undmedida['descripcion']);
             }
         });
 
-        $('#tablaSelec1 tbody').on( 'click', 'tr', function () {
-            if ( $(this).hasClass('selected') ) {
-                $(this).removeClass('selected');
-            }
-            else {
+        $('#modalEdit').on('hidden.bs.modal', function (e) {
+            if (ban === 1){
                 table.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
             }
-        } );
+            if (ban === 2){
+                tableUnd.$('tr.selected').removeClass('selected');
+            }
+            ban = 0;
+        });
 
-        $('#button').click( function () {
-            var id = table.row('.selected').data()[0];
-            var uri = '{{ path('configCat', {'idCat' : 'a'}) }}';
-            var url = 'http://portalweb.test' + uri.substr(0, uri.length -1 ) + encodeURIComponent(id);
-            console.log(url);
-            $.ajax({url: url, success: function(){
-                console.log("ajax echo");
-                    {% set formCat = formCat %}
-                    $('#modalCat').show();
-            }});
+        $('#formEdit').on("submit", function (e) {
+            e.preventDefault();
+            let data = {};
+            $(this).serializeArray().forEach((object)=>{
+                data[object.name] = object.value;
+            });
+            if (ban === 1){
+                var id = table.row('.selected').data()["idcategoria"];
+                $.post("{{ url('configCat') }}",
+                    {
+                        "id": id,
+                        "data": JSON.stringify(data)
+                    },
+                    function(){
+                        $('#modalEdit').modal('hide');
+                        table.ajax.reload();
+                    }
+                );
+            }
+            if (ban === 2){
+                var id = tableUnd.row('.selected').data()["idundMedida"];
+                $.post("{{ url('configUnd') }}",
+                    {
+                        "id": id,
+                        "data": JSON.stringify(data)
+                    },
+                    function(response, status){
+                        //alert("respuesta " + response + "\nEstado: " + status);
+                        $('#modalEdit').modal('hide');
+                        tableUnd.ajax.reload();
+                    }
+                );
+            }
         } );
     </script>
 {% endblock %}
-{#/*var uri = '{{ path('configCat', {'id' : 'a'}) }}';
-            document.location = uri.substr(0, uri.length -1 ) + encodeURIComponent(row);*/
-            #}

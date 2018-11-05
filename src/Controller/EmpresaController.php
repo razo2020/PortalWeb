@@ -89,7 +89,7 @@ class EmpresaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('lista_empresas', ['id' => $empresa->getRuc()]);
+            return $this->redirectToRoute('lista_empresas');
         }
 
         return $this->render( 'empresa/editar.html.twig', [

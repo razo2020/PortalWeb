@@ -24,13 +24,13 @@ class ApiService
         $this->validator = $validator;
     }
 
-    public function validateAndCreate($data, $entityClassName)
+    public function validateAndEditar($data, $entityClassName, $object)
     {
         $normalizers = [new ObjectNormalizer()];
         $encoders = [new JsonEncoder()];
         $serializer = new Serializer($normalizers, $encoders);
 
-        $result = $serializer->deserialize($data, $entityClassName, 'json');
+        $result = $serializer->deserialize($data, $entityClassName, 'json', ['object_to_populate' => $object]);
         $errors = $this->validator->validate($result);
 
         if(count($errors) > 0){

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categoria;
 use App\Entity\UndMedida;
+use App\Evento\ApiService;
 use App\Form\CategoriaType;
 use App\Form\UndMedidaType;
 use App\Repository\CategoriaRepository;
@@ -27,84 +28,25 @@ class HomeController extends AbstractController
         ]);
     }
 
-    /*/**
-     * @Route("/config", defaults={"idcat"="0", "idUnd"="0"}, methods={"GET", "POST"}, name="config")
-     * @Route("/config/{idcat<[1-9]\d*>}", defaults={"idUnd"="0"}, methods={"GET", "POST"}, name="configCat")
-     * @Route("/config/{idund<[1-9]\d*>}", defaults={"idcat"="0"}, methods={"GET", "POST"}, name="configUnd")
-     * @Cache(smaxage="10")
-     * @param string $idCat
-     * @param string $idUnd
-     * @param Request $request
-     * @param CategoriaRepository $categoriaRepository
-     * @param UndMedidaRepository $medidaRepository
-     * @return Response
-     */
-    /*public function configuraciones( $idCat='0',  $idUnd = "0", Request $request,CategoriaRepository $categoriaRepository, UndMedidaRepository $medidaRepository): Response
-    {
-        if ($idCat != '0'){
-            $categoria = $categoriaRepository->findOneBy(['idcategoria' => $idCat]);
-        }
-        if ($idUnd != '0'){
-            $undMedida = $medidaRepository->findOneBy(['idundMedida' => $idUnd]);
-        }
-        $categorias = $categoriaRepository->findAll();
-        $unds = $medidaRepository->findAll();
-        if (!isset($categoria)){
-            $categoria = new Categoria();
-        }
-        if (!isset($undMedida)){
-            $undMedida = new UndMedida();
-        }
-        $formCat = $this->createForm(CategoriaType::class, $categoria);
-        $formCat->handleRequest($request);
-        $formUND = $this->createForm(UndMedidaType::class, $undMedida);
-        $formUND->handleRequest($request);
-        if ($formCat->isSubmitted() && $formCat->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($categoria);
-            $em->flush();
-            return $this->redirectToRoute('config');
-        }
-        if ($formUND->isSubmitted() && $formUND->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($undMedida);
-            $em->flush();
-            return $this->redirectToRoute('config');
-        }
-        return $this->render('home/config.html.twig',[
-            'formCat' => $formCat->createView(),
-            'formUnd' => $formUND->createView(),
-            'categorias' => $categorias,
-            'unds' => $unds,
-        ]);
-    }*/
-
     /**
-     * @Route("/config/{idCat}", methods={"GET", "POST"}, name="configCat")
-     * @ParamConverter("categoria", options={"mapping": {"idCat": "idcategoria"}})
+     * @Route("/config/editcat", methods={"POST"}, name="configCat")
      */
-    public function ediCat( Categoria $categoria, Request $request): Response
+    public function ediCat(Request $request, CategoriaRepository $categoriaRepository, ApiService $apiService): Response
     {
-        $formCat = $this->createForm(CategoriaType::class, $categoria);
-        $formCat->handleRequest($request);
-        if ($formCat->isSubmitted() && $formCat->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($categoria);
-            $em->flush();
-            return $this->redirectToRoute('config');
-        }
-        return $this->render('home/config.html.twig',[
-            'formCat' => $formCat->createView(),
-        ]);
+        $editCategoria = $request->request->get("data");
+        $categoria = $categoriaRepository->find($request->request->get("id"));
+
+        $categoria = $apiService->validateAndEditar($editCategoria,Categoria::class, $categoria);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json($categoria);
     }
 
     /**
      * @Route("/config",  methods={"GET", "POST"}, name="config")
      */
-    public function configuraciones( Request $request,CategoriaRepository $categoriaRepository, UndMedidaRepository $medidaRepository): Response
+    public function configuraciones(Request $request): Response
     {
-        $categorias = $categoriaRepository->findAll();
-        $unds = $medidaRepository->findAll();
         $categoria = new Categoria();
         $undMedida = new UndMedida();
         $formCat = $this->createForm(CategoriaType::class, $categoria);
@@ -126,41 +68,39 @@ class HomeController extends AbstractController
         return $this->render('home/config.html.twig',[
             'formCat' => $formCat->createView(),
             'formUnd' => $formUND->createView(),
-            'categorias' => $categorias,
-            'unds' => $unds,
         ]);
     }
 
     /**
-     * @Route("/config/{id<[1-9]\d*>}", methods={"GET", "POST"}, name="configUnd")
+     * @Route("/categorias", name="categorias")
      */
-    public function ediUnd( UndMedida $undMedida, Request $request,CategoriaRepository $categoriaRepository, UndMedidaRepository $medidaRepository): Response
+    public  function categorias(CategoriaRepository $categoriaRepository)
     {
         $categorias = $categoriaRepository->findAll();
-        $unds = $medidaRepository->findAll();
-        $categoria = new Categoria();
-        $formCat = $this->createForm(CategoriaType::class, $categoria);
-        $formCat->handleRequest($request);
-        $formUND = $this->createForm(UndMedidaType::class, $undMedida);
-        $formUND->handleRequest($request);
-        if ($formCat->isSubmitted() && $formCat->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($categoria);
-            $em->flush();
-            return $this->redirectToRoute('config');
-        }
-        if ($formUND->isSubmitted() && $formUND->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($undMedida);
-            $em->flush();
-            return $this->redirectToRoute('config');
-        }
-        return $this->render('home/config.html.twig',[
-            'formCat' => $formCat->createView(),
-            'formUnd' => $formUND->createView(),
-            'categorias' => $categorias,
-            'unds' => $unds,
-        ]);
+        return $this->json($categorias);
+    }
+
+    /**
+     * @Route("/unidades", name="unidades")
+     */
+    public  function unidades(UndMedidaRepository $undMedidaRepository)
+    {
+        $unidades = $undMedidaRepository->findAll();
+        return $this->json($unidades);
+    }
+
+    /**
+     * @Route("/config/editund", methods={"GET", "POST"}, name="configUnd")
+     */
+    public function ediUnd( Request $request, UndMedidaRepository $medidaRepository, ApiService $apiService): Response
+    {
+        $editUnd = $request->request->get("data");
+        $und = $medidaRepository->find($request->request->get("id"));
+
+        $und = $apiService->validateAndEditar($editUnd,UndMedida::class, $und);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json($und);
     }
 
 }

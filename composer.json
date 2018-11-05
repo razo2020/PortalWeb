@@ -12,6 +12,7 @@
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "*",
+        "symfony/browser-kit": "*",
         "symfony/console": "*",
         "symfony/expression-language": "*",
         "symfony/flex": "^1.1",
@@ -29,7 +30,8 @@
         "symfony/validator": "*",
         "symfony/web-link": "*",
         "symfony/webpack-encore-pack": "^1.0",
-        "symfony/yaml": "*"
+        "symfony/yaml": "*",
+      "ext-json": "*"
     },
     "require-dev": {
         "symfony/debug-pack": "*",
