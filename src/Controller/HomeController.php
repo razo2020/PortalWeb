@@ -12,6 +12,7 @@ use App\Repository\UndMedidaRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,8 +22,15 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->cookies->has("idEmpresa")){
+            $response = new Response();
+            $response->prepare($request);
+            $response->headers->setCookie(new Cookie("idEmpresa",20458834001));
+            $response->sendHeaders();
+        }
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
         ]);
@@ -31,7 +39,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/config/editcat", methods={"POST"}, name="configCat")
      */
-    public function ediCat(Request $request, CategoriaRepository $categoriaRepository, ApiService $apiService): Response
+    public function editCat(Request $request, CategoriaRepository $categoriaRepository, ApiService $apiService): Response
     {
         $editCategoria = $request->request->get("data");
         $categoria = $categoriaRepository->find($request->request->get("id"));
@@ -92,7 +100,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/config/editund", methods={"GET", "POST"}, name="configUnd")
      */
-    public function ediUnd( Request $request, UndMedidaRepository $medidaRepository, ApiService $apiService): Response
+    public function editUnd( Request $request, UndMedidaRepository $medidaRepository, ApiService $apiService): Response
     {
         $editUnd = $request->request->get("data");
         $und = $medidaRepository->find($request->request->get("id"));

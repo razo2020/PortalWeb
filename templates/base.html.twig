@@ -21,8 +21,9 @@
         {% endblock %}
 
     </head>
-    <body class="fixed-nav sticky-footer bg-dark" id="page-top">#}
-         {{  include('inc/menu.html.twig') }}
+    <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+        {% set idempresa = app.request.cookies.has('idEmpresa') ? app.request.cookies.get('idEmpresa') : 0 %}
+         {{ include('inc/menu.html.twig') }}
          <div class="content-wrapper">
              <div class="container-fluid">
              {% block flash %}{{ include('BraincraftedBootstrapBundle/flash.html.twig', {'close': true}) }}{% endblock %}
@@ -41,6 +42,7 @@
              <!-- Core plugin JavaScript-->
              <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
             <!-- Custom scripts for all pages-->
+            <script src="{{ asset('vendor/js-cookie/js.cookie.js') }}"></script>
             <script src="{{ asset('js/sb-admin.min.js') }}"></script>
          {% endblock %}
     </body>

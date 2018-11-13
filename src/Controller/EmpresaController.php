@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Empresa;
 use App\Form\EmpresaType;
 use App\Repository\EmpresaRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,13 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class EmpresaController
  * @package App\Controller
- * @Route("/empresa")
  */
 
 class EmpresaController extends AbstractController
 {
     /**
-     * @Route("/", name="lista_empresas")
+     * @Route("/empresa", name="lista_empresas")
      */
     public function index(EmpresaRepository $empresas): Response
     {
@@ -32,7 +32,7 @@ class EmpresaController extends AbstractController
     }
 
     /**
-     * @Route("/nuevo", methods={"GET","POST"}, name="nueva_empresa")
+     * @Route("/empresa/nuevo", methods={"GET","POST"}, name="nueva_empresa")
      */
     public function nuevo(Request $request): Response
     {
@@ -69,7 +69,7 @@ class EmpresaController extends AbstractController
     }
 
     /**
-     * @Route("/{id<\d+>}", methods={"GET"}, name="mostrar_empresa")
+     * @Route("/empresa/{id<\d+>}", methods={"GET"}, name="mostrar_empresa")
      */
     public function mostrar(Empresa $empresa): Response
     {
@@ -79,7 +79,7 @@ class EmpresaController extends AbstractController
     }
 
     /**
-     * @Route("/{id<\d+>}/editar",methods={"GET", "POST"}, name="editar_empresa")
+     * @Route("/empresa/{id<\d+>}/editar",methods={"GET", "POST"}, name="editar_empresa")
      */
     public function editarEmpresa(Request $request, Empresa $empresa):Response
     {

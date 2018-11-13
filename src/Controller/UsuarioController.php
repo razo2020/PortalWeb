@@ -17,31 +17,25 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * Class UsuarioController
  * @package App\Controller
- * @Route("/usuario")
  */
 
 class UsuarioController extends AbstractController
 {
     /**
-     * @Route("/{id<\d+>}", methods={"GET"}, name="lista_usuarios")
+     * @Route("/usuario", methods={"GET"}, name="lista_usuarios")
      *
      */
-    public function index(Empresa $empresa, UsuarioRepository $usuarios):Response
+    public function index(Request $request, UsuarioRepository $usuarioRepository):Response
     {
-        if (isset($empresa)){
-            $listausuarios = $usuarios->findAll();
-        }else{
-            $listausuarios = $empresa->getUsuarios();
-        }
+        $usuarios = $usuarioRepository->findBy(['empresa' => $request->cookies->get("idEmpresa")]);
 
         return $this->render('usuario/index.html.twig', [
-            'usuarios' => $listausuarios,
-            'empresa' => $empresa,
+            'usuarios' => $usuarios,
         ]);
     }
 
     /**
-     * @Route("/{rucEmpresa}/nuevo", methods={"GET","POST"}, name="registrar_usuario")
+     * @Route("/usuario/{rucEmpresa}/nuevo", methods={"GET","POST"}, name="registrar_usuario")
      * @ParamConverter("empresa", options={"mapping": {"rucEmpresa": "ruc"}})
      */
     public function register(Empresa $empresa, Request $request, UserPasswordEncoderInterface $passwordEncoder)

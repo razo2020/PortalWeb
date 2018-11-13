@@ -253,23 +253,26 @@
                         "id": id,
                         "data": JSON.stringify(data)
                     },
-                    function(){
-                        $('#modalEdit').modal('hide');
-                        table.ajax.reload();
+                    function(response, status){
+                        if (response !== undefined && status === 'success'){
+                            $('#modalEdit').modal('hide');
+                            tableUnd.ajax.reload();
+                        }
                     }
                 );
             }
             if (ban === 2){
-                var id = tableUnd.row('.selected').data()["idundMedida"];
+                var id2 = tableUnd.row('.selected').data()["idundMedida"];
                 $.post("{{ url('configUnd') }}",
                     {
-                        "id": id,
+                        "id": id2,
                         "data": JSON.stringify(data)
                     },
                     function(response, status){
-                        //alert("respuesta " + response + "\nEstado: " + status);
-                        $('#modalEdit').modal('hide');
-                        tableUnd.ajax.reload();
+                        if (response !== undefined && status === 'success'){
+                            $('#modalEdit').modal('hide');
+                            tableUnd.ajax.reload();
+                        }
                     }
                 );
             }

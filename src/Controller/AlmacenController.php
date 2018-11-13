@@ -25,20 +25,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class AlmacenController extends AbstractController
 {
     /**
-     * @Route("/{id<\d+>}", methods={"GET"}, name="lista_almacenes")
+     * @Route("/", methods={"GET"}, name="lista_almacenes")
      *
      */
-    public function index(Empresa $empresa, AlmacenRepository $almacenRepository):Response
+    public function index(Request $request, AlmacenRepository $almacenRepository):Response
     {
-        if (isset($empresa)){
-            $almacenes = $almacenRepository->findAll();
-        }else{
-            $almacenes = $empresa->getAlmacenes();
-        }
+        $almacenes = $almacenRepository->findBy(['RUC' => $request->cookies->get("idEmpresa")]);
 
         return $this->render('almacen/index.html.twig', [
             'almacenes' => $almacenes,
-            'empresa' => $empresa,
         ]);
     }
 

@@ -18,7 +18,9 @@
         "build": "encore production"
     },
     "dependencies": {
+        "datatables.net": "^1.10.19",
         "datatables.net-dt": "^1.10.19",
+        "js-cookie": "^2.2.0",
         "metismenu": "^3.0.3",
         "select2": "^4.0.6-rc.1"
     }

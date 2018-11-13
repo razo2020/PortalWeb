@@ -109,8 +109,16 @@ class PostInstallScript
     private static function getPackage(PackageEvent $event) {
         $command = $event->getOperation()->getJobType();
         if ($command === static::jobTypeInstall) {
+            /**
+             * @class InstallOperation
+             * @method getPackage()
+             */
             return $event->getOperation()->getPackage();
         } elseif ($command === static::jobTypeUpdate) {
+            /**
+             * @class UpdateOperation
+             * @method getTargetPackage()
+             */
             return $event->getOperation()->getTargetPackage();
         }
         return null;
