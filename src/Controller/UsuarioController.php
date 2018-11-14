@@ -77,4 +77,25 @@ class UsuarioController extends AbstractController
             array('form' => $form->createView(), 'empresa' => $empresa)
         );
     }
+
+    /**
+     * @Route("/usuario/{id}", methods={"GET","POST"}, name="editar_usuario")
+     *
+     */
+    public function edit(Usuario $usuario, Request $request, UserPasswordEncoderInterface $passwordEncoder){
+        $form = $this->createForm(UsuarioType::class,$usuario);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $password = $passwordEncoder->encodePassword($usuario, $usuario->getPlainPassword());
+            $usuario->setPassword($password);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute("lista_usuarios");
+        }
+        return $this->render(
+            'usuario/registrar.html.twig',
+            array('form' => $form->createView())
+        );
+    }
+
+
 }

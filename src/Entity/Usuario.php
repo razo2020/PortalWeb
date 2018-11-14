@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Array_;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -104,7 +105,7 @@ class Usuario implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="codigoAutorizacion", type="string", length=6, nullable=false)
+     * @ORM\Column(name="codigoAutorizacion", type="string", length=3, nullable=false)
      */
     private $codigoautorizacion = '0';
 
@@ -314,6 +315,7 @@ class Usuario implements UserInterface, \Serializable
     public function serialize()
     {
         return serialize(array(
+            $this->id,
             $this->dni,
             $this->username,
             $this->password,
@@ -327,6 +329,7 @@ class Usuario implements UserInterface, \Serializable
     public function unserialize($serialized)
     {
         list (
+            $this->id,
             $this->dni,
             $this->username,
             $this->password,
@@ -353,7 +356,19 @@ class Usuario implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $a = ['ROLE_USER'];
+        switch ($this->codigoautorizacion){
+            case '1':
+                $a = ['ROLE_SUPER_ADMIN'];
+                break;
+            case '2':
+                $a = ['ROLE_ADMIN'];
+                break;
+            case '3':
+                $a = ['ROLE_MODERADOR'];
+                break;
+        }
+        return $a;
         // TODO: Implement getRoles() method.
     }
 
@@ -379,11 +394,6 @@ class Usuario implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 }
 
