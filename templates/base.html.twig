@@ -22,7 +22,11 @@
 
     </head>
     <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-        {% set idempresa = app.request.cookies.has('idEmpresa') ? app.request.cookies.get('idEmpresa') : 0 %}
+        {% if app.user is defined and app.user is not null%}
+            {% set idempresa = app.user.empresa.ruc %}
+        {% else %}
+            {% set idempresa = 0 %}
+        {% endif %}
          {{ include('inc/menu.html.twig') }}
          <div class="content-wrapper">
              <div class="container-fluid">

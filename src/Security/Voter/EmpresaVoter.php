@@ -44,16 +44,19 @@ class EmpresaVoter extends Voter
 
         switch ($attribute) {
             case self::VIEW:
-                return $this->security->isGranted('ROLE_ADMIN') ||
-                    $this->security->isGranted('ROLE_MODERADOR');
+                return $this->security->isGranted('IS_AUTHENTICATED_FULLY') && $this->usuarioEmpresa($subject,$user);
             case self::EDIT:
-                return $this->security->isGranted('ROLE_ADMIN');
+                return $this->security->isGranted('ROLE_ADMIN') && $this->usuarioEmpresa($subject,$user);
             case self::MAKER:
-                return $this->security->isGranted('ROLE_ADMIN');
+                break;
             case self::DELETE:
                 break;
         }
 
         return false;
+    }
+
+    private function usuarioEmpresa(Empresa $empresa, Usuario $usuario){
+        return $usuario->getEmpresa() === $empresa;
     }
 }

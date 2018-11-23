@@ -142,6 +142,11 @@ class Usuario implements UserInterface, \Serializable
         $this->estado = true;
     }
 
+    public  function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getDni(): ?string
     {
         return $this->dni;

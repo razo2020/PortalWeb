@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Empresa;
 use App\Form\EmpresaType;
 use App\Repository\EmpresaRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +21,7 @@ class EmpresaController extends AbstractController
 {
     /**
      * @Route("/empresa", name="lista_empresas")
+     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function index(EmpresaRepository $empresas): Response
     {
@@ -33,6 +34,7 @@ class EmpresaController extends AbstractController
 
     /**
      * @Route("/empresa/nuevo", methods={"GET","POST"}, name="nueva_empresa")
+     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function nuevo(Request $request): Response
     {
@@ -70,6 +72,7 @@ class EmpresaController extends AbstractController
 
     /**
      * @Route("/empresa/{id<\d+>}", methods={"GET"}, name="mostrar_empresa")
+     * @IsGranted("VER", subject="empresa")
      */
     public function mostrar(Empresa $empresa): Response
     {
@@ -80,6 +83,7 @@ class EmpresaController extends AbstractController
 
     /**
      * @Route("/empresa/{id<\d+>}/editar",methods={"GET", "POST"}, name="editar_empresa")
+     * @IsGranted("EDITAR", subject="empresa")
      */
     public function editarEmpresa(Request $request, Empresa $empresa):Response
     {

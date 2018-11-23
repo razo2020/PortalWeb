@@ -8,6 +8,7 @@ use App\Entity\Ubicacion;
 use App\Form\AlmacenType;
 use App\Form\AlmUbiType;
 use App\Repository\AlmacenRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -19,18 +20,24 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class AlmacenController
  * @package App\Controller
- * @Route("/empresa/almacen")
+ *
  */
 
 class AlmacenController extends AbstractController
 {
     /**
-     * @Route("/", methods={"GET"}, name="lista_almacenes")
-     *
+     * @Route("/almacen/{id}", defaults={"id":"88888888888"}, methods={"GET"}, name="lista_almacenes")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function index(Request $request, AlmacenRepository $almacenRepository):Response
+    public function index(Empresa $empresa, AlmacenRepository $almacenRepository):Response
     {
-        $almacenes = $almacenRepository->findBy(['RUC' => $request->cookies->get("idEmpresa")]);
+        if ($empresa->getRuc() === "88888888888"){
+            if ($this->isGranted("ROLE_SUPER_ADMIN")){
+                $almacenes = $almacenRepository->findAll();
+            }
+        }else{
+            $almacenes = $almacenRepository->findBy(['empresa' => $empresa]);
+        }
 
         return $this->render('almacen/index.html.twig', [
             'almacenes' => $almacenes,
@@ -38,7 +45,7 @@ class AlmacenController extends AbstractController
     }
 
     /**
-     * @Route("/{rucEmpresa}/nuevo", methods={"GET","POST"}, name="registrar_almacen")
+     * @Route("/almacen/{rucEmpresa}/nuevo", methods={"GET","POST"}, name="registrar_almacen")
      * @ParamConverter("empresa", options={"mapping": {"rucEmpresa": "ruc"}})
      */
     public function register(Empresa $empresa, Request $request):Response
@@ -77,7 +84,7 @@ class AlmacenController extends AbstractController
     }
 
     /**
-     * @Route("/{idAlmacen}/ubicacion", methods={"GET","POST"}, name="ubicaciones_lista")
+     * @Route("/almacen/{idAlmacen}/ubicacion", methods={"GET","POST"}, name="ubicaciones_lista")
      * @ParamConverter("almacen", options={"mapping": {"idAlmacen": "idalmacen"}})
      * @Template()
      */

@@ -24,13 +24,6 @@ class HomeController extends AbstractController
      */
     public function index(Request $request)
     {
-        if (!$request->cookies->has("idEmpresa")){
-            $response = new Response();
-            $response->prepare($request);
-            $response->headers->setCookie(new Cookie("idEmpresa",20458834001));
-            $response->sendHeaders();
-        }
-
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
         ]);

@@ -6,6 +6,8 @@ use App\Entity\Empresa;
 use App\Entity\Usuario;
 use App\Form\UsuarioType;
 use App\Repository\UsuarioRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,12 +24,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UsuarioController extends AbstractController
 {
     /**
-     * @Route("/usuario", methods={"GET"}, name="lista_usuarios")
-     *
+     * @Route("/usuario{rucEmpresa}", defaults={"rucEmpresa":"88888888888"}, methods={"GET"}, name="lista_usuarios")
+     * @ParamConverter("empresa", options={"mapping": {"rucEmpresa": "ruc"}})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Security("has_role('ROLE_ADMIN') or is_granted('EDITAR', empresa)")
      */
-    public function index(Request $request, UsuarioRepository $usuarioRepository):Response
+    public function index(Empresa $empresa, UsuarioRepository $usuarioRepository):Response
     {
-        $usuarios = $usuarioRepository->findBy(['empresa' => $request->cookies->get("idEmpresa")]);
+        $usuarios = $usuarioRepository->findBy(['empresa' => $empresa]);
 
         return $this->render('usuario/index.html.twig', [
             'usuarios' => $usuarios,

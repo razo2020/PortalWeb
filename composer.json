@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "BlackrockDigital/startbootstrap-sb-admin-2": "^3.0",
+        ""
         "composer-plugin-api": "^1.1",
         "doctrine/annotations": "^1.6",
         "ninsuo/symfony-collection": "^2.1",
