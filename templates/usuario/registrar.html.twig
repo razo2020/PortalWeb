@@ -7,11 +7,11 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/user/{id}">Tablero</a>
+            <a href="#">Tablero</a>
         </li>
         <li class="breadcrumb-item">
             {% if empresa is defined %}
-                <a href="{{ path('lista_usuarios',{id: empresa.ruc}) }}">Usuarios</a>
+                <a href="{{ path('lista_usuarios',{rucEmpresa: empresa.ruc}) }}">Usuarios</a>
             {% else %}
                 <a href="#">Usuarios</a>
             {% endif %}
@@ -69,7 +69,7 @@
             {% if form.saveAndCreateNew is defined %}
                 {{ form_widget(form.saveAndCreateNew, {label: 'Guardar y crear otro', attr: {class: 'btn btn-primary'}}) }}
             {% endif %}
-            <a href="{{ path('lista_usuarios',{id: idempresa}) }}" class="btn btn-link">
+            <a href="{{ path('lista_usuarios',{rucEmpresa: empresa.ruc}) }}" class="btn btn-link">
                 <i class="fa fa-list-alt" aria-hidden="true"></i> Volver al listado de usuarios
             </a>
             {{ form_end(form) }}

@@ -64,7 +64,7 @@
                                 <div class="mr-5">
                                     {{ empresa.usuarios|length }} Usuarios!</div>
                             </div>
-                            <a class="card-footer text-white clearfix small z-1" href="{{ path('lista_usuarios') }}">
+                            <a class="card-footer text-white clearfix small z-1" href="{{ path('lista_usuarios', {rucEmpresa: empresa.ruc}) }}">
                                 <span class="float-left">Ver usuarios</span>
                                 <span class="float-right">
                                     <i class="fa fa-angle-right"></i>
@@ -81,7 +81,7 @@
                                 <div class="mr-5">
                                     {{ empresa.almacenes|length }} Almacenes!</div>
                             </div>
-                            <a class="card-footer text-white clearfix small z-1" href="{{ path('lista_almacenes') }}">
+                            <a class="card-footer text-white clearfix small z-1" href="{{ path('lista_almacenes', {id: empresa.ruc}) }}">
                                 <span class="float-left">Ver Almacenes</span>
                                 <span class="float-right">
                                     <i class="fa fa-angle-right"></i>

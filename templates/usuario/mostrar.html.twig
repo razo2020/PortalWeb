@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mostrar Usuario{% endblock %}
+
+{% block body %}
+
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Tablero</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ path('mostrar_empresa',{ id: usuario.empresa.ruc }) }}">Empresa</a>
+        </li>
+        <li class="breadcrumb-item active">Usuario</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card-header badge-primary">
+                <h5>
+                    <p class="text-center">{{ usuario.apodo }}
+                        <span class="small float-right">DNI: {{ usuario.dni }}</span>
+                    </p>
+                </h5>
+            </div>
+            <div class="card-body row">
+                <div class="col-md-auto">
+                    <strong>Nombres y apellidos:</strong> {{ usuario.nombres}}
+                </div>
+                <div class="w-100 d-none d-md-block"></div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6">
+                        <strong>Trabaja:</strong> {{ usuario.empresa.razonSocial }}
+                        <br>
+                        <strong>Telefono:</strong> {{ usuario.telefono }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Apodo:</strong> {{ usuario.apodo }}
+                        <br>
+                        <strong>Email:</strong> {{ usuario.email }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

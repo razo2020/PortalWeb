@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UsuarioController extends AbstractController
 {
     /**
-     * @Route("/usuario{rucEmpresa}", defaults={"rucEmpresa":"88888888888"}, methods={"GET"}, name="lista_usuarios")
+     * @Route("/usuario{rucEmpresa}", name="lista_usuarios")
      * @ParamConverter("empresa", options={"mapping": {"rucEmpresa": "ruc"}})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Security("has_role('ROLE_ADMIN') or is_granted('EDITAR', empresa)")
@@ -35,6 +35,7 @@ class UsuarioController extends AbstractController
 
         return $this->render('usuario/index.html.twig', [
             'usuarios' => $usuarios,
+            'empresa' => $empresa,
         ]);
     }
 
@@ -73,7 +74,7 @@ class UsuarioController extends AbstractController
                 return $this->redirectToRoute('registrar_usuario',['rucEmpresa' => $empresa->getRuc()]);
             }
 
-            return $this->redirectToRoute('lista_usuarios',['id' => $empresa->getRuc()]);
+            return $this->redirectToRoute('lista_usuarios',['rucEmpresa' => $empresa->getRuc()]);
         }
 
         return $this->render(
@@ -83,7 +84,7 @@ class UsuarioController extends AbstractController
     }
 
     /**
-     * @Route("/usuario/{id}", methods={"GET","POST"}, name="editar_usuario")
+     * @Route("/usuario/{id}/editar", methods={"GET","POST"}, name="editar_usuario")
      *
      */
     public function edit(Usuario $usuario, Request $request, UserPasswordEncoderInterface $passwordEncoder){
@@ -93,12 +94,21 @@ class UsuarioController extends AbstractController
             $password = $passwordEncoder->encodePassword($usuario, $usuario->getPlainPassword());
             $usuario->setPassword($password);
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute("lista_usuarios");
+            return $this->redirectToRoute("lista_usuarios",['rucEmpresa' => $usuario->getEmpresa()->getRuc()]);
         }
         return $this->render(
             'usuario/registrar.html.twig',
             array('form' => $form->createView())
         );
+    }
+
+    /**
+     * @Route("/usuario/{id}/mostrar", methods={"GET"}, name="mostrar_usuario")
+     *
+     */
+    public function vew(Usuario $usuario)
+    {
+        return $this->render(':usuario:mostrar.html.twig', array('usuario' => $usuario));
     }
 
 

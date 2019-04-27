@@ -10,7 +10,7 @@
                 <a href="#">Tablero</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ path('mostrar_empresa',{ id: idempresa }) }}">Empresa</a>
+                <a href="{{ path('mostrar_empresa',{ id: empresa.ruc }) }}">Empresa</a>
             </li>
             <li class="breadcrumb-item active">Usuarios</li>
         </ol>
@@ -18,7 +18,7 @@
         <!-- Example DataTables Card-->
         <div class="card mb-3">
             <div class="card-header">
-                <i class="fa fa-table"></i> Usuarios <a href="{{ path('registrar_usuario',{rucEmpresa: idempresa}) }}"> <span class="small float-right">Agregar</span> </a>
+                <i class="fa fa-table"></i> Usuarios <a href="{{ path('registrar_usuario',{rucEmpresa: empresa.ruc}) }}"> <span class="small float-right">Agregar</span> </a>
             </div>
             <div class="card-body">
                 {% if usuarios %}
@@ -48,7 +48,7 @@
                                 <td>{{ user.apellidos }}</td>
                                 <td class="text-center">
                                     <div class="item-actions">
-                                        <a href="#" class="btn btn-sm btn-secondary">
+                                        <a href="{{ path("mostrar_usuario", {id: user.id}) }}" class="btn btn-sm btn-secondary">
                                             <i class="fa fa-eye" aria-hidden="true"></i> ver
                                         </a>
                                         <a href="{{ path("editar_usuario",{id: user.id}) }}" class="btn btn-sm btn-dark">

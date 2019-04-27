@@ -1,0 +1,113 @@
+nod32 = https://mega.nz/#!U5s1FKiI!UhpXowZhRHPneroxyM5bIWeB5jJXiLUHCHHtMqIA27A
+https://www.mediafire.com/file/39mm96x0lv06shp/EAV120270W64.rar/file
+Contraseña: desmaxgo.com
+
+instalar: composer, node, yarn
+npm install npm@latest -g
+npm install install
+npm install -g npm
+npm install -g @angular/cli
+
+--proyecto angular:
+ng new [nombreDeTuNuevoProyecto]
+
+composer create-project symfony/website-skeleton proyecto
+
+composer requiere server --dev
+
+php bin/console server:run
+
+php bin/console doctrine:mapping:import App\Entity annotation --path=src/Entity
+
+// generates getter/setter methods
+php bin/console make:entity --regenerate App
+
+composer require webpack-core
+yarn install
+
+------------------------
+yarn add @symfony/webpack-encore --dev
+yarn add sass-loader node-sass --dev
+npm install bootstrap
+-------------------
+
+composer require --dev symfony/phpunit-bridge
+composer require symfony/phpunit-bridge
+
+Some files may have been created or updated to configure your new packages.
+Please review, edit and commit them: these files are yours.
+
+
+ What's next?
+
+
+  * Run your application:
+    1. Change to the project directory
+    2. Create your code repository with the git init command
+    3. Execute the php -S 127.0.0.1:8000 -t public command
+    4. Browse to the http://localhost:8000/ URL.
+
+       Quit the server with CTRL-C.
+       Run composer require server --dev for a better web server.
+
+  * Read the documentation at https://symfony.com/doc
+
+
+ Database Configuration
+
+
+  * Modify your DATABASE_URL config in .env
+
+  * Configure the driver (mysql) and
+    server_version (5.7) in config/packages/doctrine.yaml
+
+
+ How to test?
+
+
+  * Write test cases in the tests/ folder
+  * Run php bin/phpunit
+
+
+
+###################git###############3
+$ git config --global user.name "Luis Alvarado Rojas"
+$ git config --global user.email "wow.trujillo@gmail.com"
+$ git config --global color.status auto
+$ git config --global color.branch auto
+$ git config --global color.diff auto
+$ git config --global color.interactive auto
+
+$ git clone https://github.com/razo2020/PortalWeb.git
+
+ssh-keygen -t rsa -C "wow.trujillo@gmail.com"
+por defecto: /Users/your_user_directory/.ssh/id_rsa y una “frase de paso” como contraseña.
+GitHub en “Account Settings” > “SSH Public Keys” > “Add another public key”
+
+ssh git@github.com
+
+$ git init
+$ git add *
+$ git status
+$ git commit -m 'Subo la estructura del proyecto al repositorio de GitHub'
+$ git remote add origin git@github.com:razo2020/PortalWeb.git
+$ git push -u origin master
+
+
+composer require symfony/webpack-encore-pack
+yarn install
+ yarn add jquery --dev
+ yarn add popper.js --dev
+ yarn add bootstrap --dev
+yarn add bootstrap-sass --dev
+yarn add metismenu
+
+
+
+ yarn encore dev
+ yarn encore dev --watch
+ yarn encore production
+
+
+php bin/console cache:clear --env=prod --no-debug
+

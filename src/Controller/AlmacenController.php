@@ -26,18 +26,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class AlmacenController extends AbstractController
 {
     /**
-     * @Route("/almacen/{id}", defaults={"id":"88888888888"}, methods={"GET"}, name="lista_almacenes")
+     * @Route("/almacen/{id}", name="lista_almacenes")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function index(Empresa $empresa, AlmacenRepository $almacenRepository):Response
     {
-        if ($empresa->getRuc() === "88888888888"){
-            if ($this->isGranted("ROLE_SUPER_ADMIN")){
-                $almacenes = $almacenRepository->findAll();
-            }
-        }else{
-            $almacenes = $almacenRepository->findBy(['empresa' => $empresa]);
-        }
+        $almacenes = $almacenRepository->findBy(['empresa' => $empresa]);
 
         return $this->render('almacen/index.html.twig', [
             'almacenes' => $almacenes,
@@ -45,10 +39,22 @@ class AlmacenController extends AbstractController
     }
 
     /**
+     * @param AlmacenRepository $almacenRepository
+     * @return Response
+     * @Route("/almacenes", name="lista_almacenes_all")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     */
+    public function allAlmacenes(AlmacenRepository $almacenRepository):Response
+    {
+        $almacenes = $almacenRepository->findAll();
+        return $this->render('almacen/index.html.twig', ['almacenes' => $almacenes]);
+    }
+
+    /**
      * @Route("/almacen/{rucEmpresa}/nuevo", methods={"GET","POST"}, name="registrar_almacen")
      * @ParamConverter("empresa", options={"mapping": {"rucEmpresa": "ruc"}})
      */
-    public function register(Empresa $empresa, Request $request):Response
+    public function registrar(Empresa $empresa, Request $request):Response
     {
         // 1) build the form
         $almacen = new Almacen();
