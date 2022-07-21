@@ -24,7 +24,7 @@ class PeticionOferta
     private $idpeticionOferta;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="asunto", type="string", length=45, nullable=true)
      */
@@ -47,7 +47,7 @@ class PeticionOferta
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="fecha", type="datetime", nullable=false)
      */
     private $fecha = 'CURRENT_TIMESTAMP';
 
@@ -61,7 +61,7 @@ class PeticionOferta
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=2, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=2, nullable=false)
      */
     private $estado;
 

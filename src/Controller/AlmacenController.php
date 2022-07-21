@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Almacen;
 use App\Entity\Empresa;
-use App\Entity\Ubicacion;
 use App\Form\AlmacenType;
 use App\Form\AlmUbiType;
 use App\Repository\AlmacenRepository;

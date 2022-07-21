@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Material
  *
- * @ORM\Table(name="material", uniqueConstraints={@ORM\UniqueConstraint(name="MatNombre_UNIQUE", columns={"nombre"})}, indexes={@ORM\Index(name="fk_Material_Categoria_idx", columns={"Categoria_idCategoria"}), @ORM\Index(name="fk_Material_UND_Medida_idx", columns={"UND_Medida_idUND_Medida"})})
+ * @ORM\Table(name="material", uniqueConstraints={@ORM\UniqueConstraint(name="MatNombre_UNIQUE", columns={"nombre"})}, indexes={@ORM\Index(name="fk_Material_Categoria1_idx", columns={"Categoria_idCategoria"}), @ORM\Index(name="fk_Material_UND_Medida1_idx", columns={"UND_Medida_idUND_Medida"})})
  * @ORM\Entity(repositoryClass="App\Repository\MaterialRepository")
  */
 class Material
@@ -31,7 +31,7 @@ class Material
     private $nombre;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=60, nullable=true)
      */
@@ -40,16 +40,9 @@ class Material
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=1, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sujetoLote", type="string", length=1, nullable=true)
-     */
-    private $sujetoLote;
 
     /**
      * @var \Categoria
@@ -74,24 +67,21 @@ class Material
     /**
      * @var \Ubicacion
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="material")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="material", cascade={"persist"})
      */
     private $ubicaciones;
 
     /**
-     * @var Almacen
+     * @var \DetalleSolped
      *
-     * @ORM\ManyToOne(targetEntity="Almacen", inversedBy="materiales", cascade={"persist"})
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Almacen_idAlmacen", referencedColumnName="idAlmacen"),
-     *   @ORM\JoinColumn(name="Almacen_Empresa_RUC", referencedColumnName="Empresa_RUC")
-     * })
+     * @ORM\OneToMany(targetEntity="App\Entity\DetalleSolped", mappedBy="material")
      */
-    private $almacen;
+    private $detallesolped;
 
     public function __construct()
     {
         $this->ubicaciones = new ArrayCollection();
+        $this->detallesolped = new ArrayCollection();
     }
 
     public function getIdmaterial(): ?string
@@ -135,18 +125,6 @@ class Material
         return $this;
     }
 
-    public function getSujetoLote(): ?string
-    {
-        return $this->sujetoLote;
-    }
-
-    public function setSujetoLote(string $sujetoLote): self
-    {
-        $this->sujetoLote = $sujetoLote;
-
-        return $this;
-    }
-
     public function getCategoria(): ?Categoria
     {
         return $this->categoria;
@@ -167,18 +145,6 @@ class Material
     public function setUndMedida(?UndMedida $undMedida): self
     {
         $this->undMedida = $undMedida;
-
-        return $this;
-    }
-
-    public function getAlmacen(): ?Almacen
-    {
-        return $this->almacen;
-    }
-
-    public function setAlmacen(?Almacen $almacen): self
-    {
-        $this->almacen = $almacen;
 
         return $this;
     }
@@ -208,6 +174,37 @@ class Material
             // set the owning side to null (unless already changed)
             if ($ubicacion->getMaterial() === $this) {
                 $ubicacion->setMaterial(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DetalleSolped[]
+     */
+    public function getDetallesSolped(): Collection
+    {
+        return $this->detallesolped;
+    }
+
+    public function addDetalleSolped(DetalleSolped $detallesolped): self
+    {
+        if (!$this->detallesolped->contains($detallesolped)) {
+            $this->detallesolped[] = $detallesolped;
+            $detallesolped->setMaterial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetalleSolped(DetalleSolped $detallesolped): self
+    {
+        if ($this->detallesolped->contains($detallesolped)) {
+            $this->detallesolped->removeElement($detallesolped);
+            // set the owning side to null (unless already changed)
+            if ($detallesolped->getMaterial() === $this) {
+                $detallesolped->setMaterial(null);
             }
         }
 

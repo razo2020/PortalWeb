@@ -31,28 +31,28 @@ class Empresa
     private $razonSocial;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="direccion", type="string", length=45, nullable=true)
      */
     private $direccion;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="telefono1", type="string", length=15, nullable=true)
      */
     private $telefono1;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="telefono2", type="string", length=15, nullable=true)
      */
     private $telefono2;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="rubro", type="string", length=45, nullable=true)
      */
@@ -61,14 +61,14 @@ class Empresa
     /**
      * @var string
      *
-     * @ORM\Column(name="tipo", type="string", length=1, nullable=false, options={"default"="1","fixed"=true})
+     * @ORM\Column(name="tipo", type="string", length=1, nullable=false)
      */
     private $tipo = '1';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=1, nullable=false, options={"default"="1","fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado = '1';
 

@@ -17,7 +17,7 @@ class Aprobacion
     /**
      * @var string
      *
-     * @ORM\Column(name="idAprobacion", type="string", length=3, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="idAprobacion", type="string", length=3, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -130,3 +130,4 @@ class Aprobacion
 
 
 }
+

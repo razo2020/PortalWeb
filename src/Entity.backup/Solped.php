@@ -24,14 +24,14 @@ class Solped
     private $idsolped;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="asunto", type="string", length=45, nullable=true)
      */
     private $asunto;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="nota", type="string", length=45, nullable=true)
      */
@@ -40,14 +40,14 @@ class Solped
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="fecha", type="datetime", nullable=false)
      */
     private $fecha = 'CURRENT_TIMESTAMP';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=2, nullable=false, options={"default"="1","fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=2, nullable=false)
      */
     private $estado = '1';
 

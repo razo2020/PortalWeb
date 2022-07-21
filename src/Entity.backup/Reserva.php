@@ -47,7 +47,7 @@ class Reserva
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=1, nullable=false, options={"default"="1","fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado = '1';
 

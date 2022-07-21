@@ -7,52 +7,47 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DetalleGuia
+ * Comprobante
  *
- * @ORM\Table(name="detalle_guia", indexes={@ORM\Index(name="IDX_96D1AAD024B239D8", columns={"Guia_idGuia"})})
- * @ORM\Entity(repositoryClass="App\Repository\DetalleGuiaRepository")
+ * @ORM\Table(name="comprobante")
+ * @ORM\Entity(repositoryClass="App\Repository\ComprobanteRepository")
  */
-class DetalleGuia
+class Comprobante
 {
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="idPosicion", type="integer", nullable=false)
+     * @ORM\Column(name="idComprobante", type="string", length=11, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idposicion;
+    private $idcomprobante;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="cantidad", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="precioTotal", type="float", precision=10, scale=0, nullable=false)
      */
-    private $cantidad;
+    private $preciototal;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="fecha", type="datetime", nullable=false)
      */
     private $fecha = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \Guia
+     * @var string
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\ManyToOne(targetEntity="Guia")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Guia_idGuia", referencedColumnName="idGuia")
-     * })
+     * @ORM\Column(name="comentario", type="string", length=45, nullable=true)
      */
-    private $guia;
+    private $comentario;
 
     /**
      * @var \Entrega
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Entrega", mappedBy="detalleGuia")
+     * @ORM\OneToMany(targetEntity="App\Entity\Entrega", mappedBy="comprobante")
      */
     private $entregas;
 
@@ -61,19 +56,19 @@ class DetalleGuia
         $this->entregas = new ArrayCollection();
     }
 
-    public function getIdposicion(): ?int
+    public function getIdcomprobante(): ?string
     {
-        return $this->idposicion;
+        return $this->idcomprobante;
     }
 
-    public function getCantidad(): ?float
+    public function getPreciototal(): ?float
     {
-        return $this->cantidad;
+        return $this->preciototal;
     }
 
-    public function setCantidad(float $cantidad): self
+    public function setPreciototal(float $preciototal): self
     {
-        $this->cantidad = $cantidad;
+        $this->preciototal = $preciototal;
 
         return $this;
     }
@@ -90,14 +85,14 @@ class DetalleGuia
         return $this;
     }
 
-    public function getGuia(): ?Guia
+    public function getComentario(): ?string
     {
-        return $this->guia;
+        return $this->comentario;
     }
 
-    public function setGuia(?Guia $guia): self
+    public function setComentario(?string $comentario): self
     {
-        $this->guia = $guia;
+        $this->comentario = $comentario;
 
         return $this;
     }
@@ -114,7 +109,7 @@ class DetalleGuia
     {
         if (!$this->entregas->contains($entrega)) {
             $this->entregas[] = $entrega;
-            $entrega->setDetalleGuia($this);
+            $entrega->setComprobante($this);
         }
 
         return $this;
@@ -125,8 +120,8 @@ class DetalleGuia
         if ($this->entregas->contains($entrega)) {
             $this->entregas->removeElement($entrega);
             // set the owning side to null (unless already changed)
-            if ($entrega->getDetalleGuia() === $this) {
-                $entrega->setDetalleGuia(null);
+            if ($entrega->getComprobante() === $this) {
+                $entrega->setComprobante(null);
             }
         }
 
@@ -135,3 +130,4 @@ class DetalleGuia
 
 
 }
+

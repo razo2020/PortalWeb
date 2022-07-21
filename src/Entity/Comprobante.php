@@ -33,12 +33,12 @@ class Comprobante
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime", nullable=false)
+     * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $fecha = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="comentario", type="string", length=45, nullable=true)
      */
@@ -130,4 +130,3 @@ class Comprobante
 
 
 }
-

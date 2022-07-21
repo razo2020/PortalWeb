@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DetalleSolped
  *
- * @ORM\Table(name="detalle_solped", indexes={@ORM\Index(name="fk_solped_has_Material_solped_idx", columns={"solped_idsolped"}), @ORM\Index(name="fk_Detalle_solped_Ubicacion_idx", columns={"Ubicacion_idUbicacion"})})
+ * @ORM\Table(name="detalle_solped", indexes={@ORM\Index(name="fk_solped_has_Material_Material1_idx", columns={"Material_idMaterial"}), @ORM\Index(name="fk_solped_has_Material_solped1_idx", columns={"solped_idsolped"})})
  * @ORM\Entity(repositoryClass="App\Repository\DetalleSolpedRepository")
  */
 class DetalleSolped
@@ -38,21 +38,21 @@ class DetalleSolped
     private $cantidad;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="comentraio", type="string", length=45, nullable=true)
      */
     private $comentraio;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="necesidad", type="string", length=45, nullable=true)
      */
     private $necesidad;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="solicitante", type="string", length=45, nullable=true)
      */
@@ -68,30 +68,26 @@ class DetalleSolped
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=2, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=2, nullable=false)
      */
     private $estado;
 
     /**
-     * @var \Ubicacion[]|ArrayCollection
+     * @var \Material
      *
-     * @ORM\ManyToMany(targetEntity="Ubicacion")
-     * @ORM\JoinTable(name="Ubicacion_has_Detalle_solped",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="Detalle_solped_idposicion", referencedColumnName="idposicion"),
-     *     @ORM\JoinColumn(name="Detalle_solped_solped_idsolped", referencedColumnName="solped_idsolped")
-     *   },
-     *   inverseJoinColumns={@ORM\JoinColumn(name="Ubicacion_idUbicacion", referencedColumnName="idUbicacion")}
-     * )
+     * @ORM\ManyToOne(targetEntity="Material", inversedBy="solped")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Material_idMaterial", referencedColumnName="idMaterial")
+     * })
      */
-    private $ubicacion;
+    private $material;
 
     /**
      * @var \Solped
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\ManyToOne(targetEntity="Solped")
+     * @ORM\ManyToOne(targetEntity="Solped", inversedBy="detallesolped")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="solped_idsolped", referencedColumnName="idsolped")
      * })
@@ -99,14 +95,14 @@ class DetalleSolped
     private $solped;
 
     /**
-     * @var DetallePeticionOferta[]|ArrayCollection
+     * @var \DetallePeticionOferta
      *
      * @ORM\OneToMany(targetEntity="App\Entity\DetallePeticionOferta", mappedBy="detalleSolped")
      */
     private $detallepeticionofertas;
 
     /**
-     * @var DetallePedido[]|ArrayCollection
+     * @var \DetallePedido
      *
      * @ORM\OneToMany(targetEntity="App\Entity\DetallePedido", mappedBy="detalleSolped")
      */
@@ -116,7 +112,6 @@ class DetalleSolped
     {
         $this->detallepeticionofertas = new ArrayCollection();
         $this->detallepedidos = new ArrayCollection();
-        $this->ubicacion = new ArrayCollection();
     }
 
     public function getIdposicion(): ?int
@@ -208,6 +203,18 @@ class DetalleSolped
         return $this;
     }
 
+    public function getMaterial(): ?Material
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(?Material $material): self
+    {
+        $this->material = $material;
+
+        return $this;
+    }
+
     public function getSolped(): ?Solped
     {
         return $this->solped;
@@ -277,32 +284,6 @@ class DetalleSolped
             if ($detallepedido->getDetalleSolped() === $this) {
                 $detallepedido->setDetalleSolped(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Ubicacion[]
-     */
-    public function getUbicacion(): Collection
-    {
-        return $this->ubicacion;
-    }
-
-    public function addUbicacion(Ubicacion $ubicacion): self
-    {
-        if (!$this->ubicacion->contains($ubicacion)) {
-            $this->ubicacion[] = $ubicacion;
-        }
-
-        return $this;
-    }
-
-    public function removeUbicacion(Ubicacion $ubicacion): self
-    {
-        if ($this->ubicacion->contains($ubicacion)) {
-            $this->ubicacion->removeElement($ubicacion);
         }
 
         return $this;

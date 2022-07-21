@@ -17,7 +17,7 @@ composer requiere server --dev
 
 php bin/console server:run
 
-php bin/console doctrine:mapping:import App\Entity annotation --path=src/Entity
+php bin/console doctrine:mapping:import --force App\Entity annotation --path=src/Entity
 
 // generates getter/setter methods
 php bin/console make:entity --regenerate App
@@ -110,4 +110,6 @@ yarn add metismenu
 
 
 php bin/console cache:clear --env=prod --no-debug
+
+
 

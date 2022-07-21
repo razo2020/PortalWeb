@@ -17,7 +17,7 @@ class Cargo
     /**
      * @var string
      *
-     * @ORM\Column(name="idCargo", type="string", length=3, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="idCargo", type="string", length=3, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */

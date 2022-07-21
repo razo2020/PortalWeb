@@ -22,7 +22,7 @@ class Devolucion
     private $iddevolucion;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="comentario", type="string", length=45, nullable=true)
      */
@@ -38,7 +38,7 @@ class Devolucion
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="fecha", type="datetime", nullable=false)
      */
     private $fecha = 'CURRENT_TIMESTAMP';
 

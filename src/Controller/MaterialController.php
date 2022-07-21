@@ -9,6 +9,7 @@ use App\Entity\Ubicacion;
 use App\Form\MaterialType;
 use App\Repository\AlmacenRepository;
 use App\Repository\MaterialRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,14 +22,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class MaterialController extends AbstractController
 {
     /**
-     * @Route("/{id<\d+>}", methods={"GET"}, name="lista_materiales")
+     * @Route("/almacen/{idAlmacen}/materiales", methods={"GET","POST"}, name="lista_materiales")
+     * @ParamConverter("almacen", options={"mapping": {"idAlmacen": "idalmacen"}})
      */
-    public function index(Empresa $empresa):Response
+    public function index(Almacen $almacen):Response
     {
-        $almacen = $empresa->getAlmacenes()->first();
-        $ubicaciones = $almacen->getUbicaciones();
+        $materiales = $almacen->getMateriales();
         return $this->render('material/index.html.twig', [
-            'ubicaciones' => $ubicaciones,
+            'materiales' => $materiales,
             'almacen' => $almacen,
         ]);
     }

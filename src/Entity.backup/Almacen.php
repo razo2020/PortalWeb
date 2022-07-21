@@ -31,7 +31,7 @@ class Almacen
     private $nombre;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="direccion", type="string", length=45, nullable=true)
      */
@@ -40,15 +40,13 @@ class Almacen
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=1, nullable=false, options={"default"="1","fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado = '1';
 
     /**
      * @var \Empresa
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="almacenes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Empresa_RUC", referencedColumnName="RUC")
@@ -57,15 +55,15 @@ class Almacen
     private $empresa;
 
     /**
-     * @var Material[]|ArrayCollection
+     * @var Ubicacion[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Material", mappedBy="almacen", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Ubicacion", mappedBy="almacen", cascade={"persist"})
      */
-    private $materiales;
+    private $ubicaciones;
 
     public function __construct()
     {
-        $this->materiales = new ArrayCollection();
+        $this->ubicaciones = new ArrayCollection();
     }
 
     public function getIdalmacen(): ?string
@@ -131,28 +129,28 @@ class Almacen
     /**
      * @return Collection|Ubicacion[]
      */
-    public function getMateriales(): Collection
+    public function getUbicaciones(): Collection
     {
-        return $this->materiales;
+        return $this->ubicaciones;
     }
 
-    public function addMaterial(Material $material): self
+    public function addUbicacion(Ubicacion $ubicacion): self
     {
-        if (!$this->materiales->contains($material)) {
-            $this->materiales[] = $material;
-            $material->setAlmacen($this);
+        if (!$this->ubicaciones->contains($ubicacion)) {
+            $this->ubicaciones[] = $ubicacion;
+            $ubicacion->setAlmacen($this);
         }
 
         return $this;
     }
 
-    public function removeMaterial(Material $material): self
+    public function removeUbicacion(Ubicacion $ubicacion): self
     {
-        if ($this->materiales->contains($material)) {
-            $this->materiales->removeElement($material);
+        if ($this->ubicaciones->contains($ubicacion)) {
+            $this->ubicaciones->removeElement($ubicacion);
             // set the owning side to null (unless already changed)
-            if ($material->getAlmacen() === $this) {
-                $material->setAlmacen(null);
+            if ($ubicacion->getAlmacen() === $this) {
+                $ubicacion->setAlmacen(null);
             }
         }
 

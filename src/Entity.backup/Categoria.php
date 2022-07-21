@@ -17,7 +17,7 @@ class Categoria
      *
      * @ORM\Column(name="idCategoria", type="string", length=15, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $idcategoria;
 
@@ -29,7 +29,7 @@ class Categoria
     private $nombre;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=45, nullable=true)
      */
@@ -38,7 +38,7 @@ class Categoria
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=1, nullable=false, options={"default"="1","fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado = '1';
 

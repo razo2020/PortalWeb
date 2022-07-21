@@ -38,7 +38,7 @@ class Historial
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="fecha", type="datetime", nullable=false)
      */
     private $fecha = 'CURRENT_TIMESTAMP';
 
@@ -50,28 +50,28 @@ class Historial
     private $idusuario;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="comentario", type="text", length=65535, nullable=true)
      */
     private $comentario;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="id2Tabla", type="string", length=45, nullable=true)
      */
     private $id2tabla;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="id3Tabla", type="string", length=45, nullable=true)
      */
     private $id3tabla;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="id4Tabla", type="string", length=45, nullable=true)
      */

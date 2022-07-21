@@ -98,7 +98,7 @@ class UsuarioController extends AbstractController
         }
         return $this->render(
             'usuario/registrar.html.twig',
-            array('form' => $form->createView())
+            array('form' => $form->createView(), 'empresa' => $usuario->getEmpresa())
         );
     }
 
@@ -108,7 +108,7 @@ class UsuarioController extends AbstractController
      */
     public function vew(Usuario $usuario)
     {
-        return $this->render(':usuario:mostrar.html.twig', array('usuario' => $usuario));
+        return $this->render('usuario/mostrar.html.twig', array('usuario' => $usuario));
     }
 
 

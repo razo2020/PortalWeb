@@ -24,7 +24,7 @@ class Pedido
     private $idpedido;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="asunto", type="string", length=45, nullable=true)
      */
@@ -54,12 +54,12 @@ class Pedido
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=2, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=2, nullable=false)
      */
     private $estado;
 
     /**
-     * @var \Detallepedido[]|ArrayCollection
+     * @var \Detallepedido
      *
      * @ORM\OneToMany(targetEntity="App\Entity\DetallePedido", mappedBy="pedido")
      */

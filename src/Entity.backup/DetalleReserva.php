@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DetalleReserva
  *
- * @ORM\Table(name="detalle_reserva", indexes={@ORM\Index(name="fk_Reserva_has_Almacen_has_Material_Reserva_idx", columns={"Reserva_idReserva"}), @ORM\Index(name="fk_Detalle_Reserva_Ubicacion_idx", columns={"Ubicacion_idUbicacion"})})
+ * @ORM\Table(name="detalle_reserva", indexes={@ORM\Index(name="fk_Reserva_has_Almacen_has_Material_Reserva1_idx", columns={"Reserva_idReserva"}), @ORM\Index(name="fk_Detalle_Reserva_Ubicacion1_idx", columns={"Ubicacion_idUbicacion"})})
  * @ORM\Entity(repositoryClass="App\Repository\DetalleReservaRepository")
  */
 class DetalleReserva
@@ -31,7 +31,7 @@ class DetalleReserva
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=2, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=2, nullable=false)
      */
     private $estado;
 
@@ -51,7 +51,9 @@ class DetalleReserva
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="Reserva", inversedBy="detalleReserva")
-     * @ORM\JoinColumn(name="Reserva_idReserva", referencedColumnName="idReserva")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Reserva_idReserva", referencedColumnName="idReserva")
+     * })
      */
     private $reserva;
 

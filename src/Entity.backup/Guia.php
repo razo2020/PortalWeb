@@ -26,12 +26,12 @@ class Guia
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="fecha", type="datetime", nullable=false)
      */
     private $fecha = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="comentario", type="string", length=45, nullable=true)
      */
@@ -52,14 +52,14 @@ class Guia
     private $dni;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="ruc", type="string", length=11, nullable=true)
      */
     private $ruc;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="razonSocial", type="string", length=45, nullable=true)
      */

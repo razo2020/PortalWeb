@@ -21,7 +21,6 @@ class EmpresaController extends AbstractController
 {
     /**
      * @Route("/empresa", name="lista_empresas")
-     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function index(EmpresaRepository $empresas): Response
     {
@@ -76,6 +75,7 @@ class EmpresaController extends AbstractController
      */
     public function mostrar(Empresa $empresa): Response
     {
+        if( is_null($empresa)){return $this->redirectToRoute("lista_empresas");}
         return $this->render('empresa/mostrar.html.twig', [
             'empresa' => $empresa,
         ]);

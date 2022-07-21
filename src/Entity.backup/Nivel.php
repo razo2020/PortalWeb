@@ -15,7 +15,7 @@ class Nivel
     /**
      * @var string
      *
-     * @ORM\Column(name="idNivel", type="string", length=3, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="idNivel", type="string", length=3, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -88,3 +88,4 @@ class Nivel
 
 
 }
+

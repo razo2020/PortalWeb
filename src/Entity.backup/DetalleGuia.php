@@ -33,7 +33,7 @@ class DetalleGuia
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="fecha", type="datetime", nullable=false)
      */
     private $fecha = 'CURRENT_TIMESTAMP';
 
@@ -135,3 +135,4 @@ class DetalleGuia
 
 
 }
+

@@ -5,21 +5,21 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Categoria
+ * UndMedida
  *
- * @ORM\Table(name="categoria")
- * @ORM\Entity(repositoryClass="App\Repository\CategoriaRepository")
+ * @ORM\Table(name="und_medida")
+ * @ORM\Entity(repositoryClass="App\Repository\UndMedidaRepository")
  */
-class Categoria
+class UndMedida
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="idCategoria", type="string", length=15, nullable=false)
+     * @ORM\Column(name="idUND_Medida", type="string", length=3, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $idcategoria;
+    private $idundMedida;
 
     /**
      * @var string
@@ -29,7 +29,7 @@ class Categoria
     private $nombre;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=45, nullable=true)
      */
@@ -38,18 +38,18 @@ class Categoria
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=1, nullable=false, options={"default"="1","fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado = '1';
 
-    public function getIdcategoria(): ?string
+    public function getIdundMedida(): ?string
     {
-        return $this->idcategoria;
+        return $this->idundMedida;
     }
 
-    public function setIdcategoria(string $idcategoria): self
+    public function setIdundMedida(string $idundMedida): self
     {
-        $this->idcategoria = $idcategoria;
+        $this->idundMedida = $idundMedida;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Array_;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="usuario", uniqueConstraints={
  *     @ORM\UniqueConstraint(name="username_UNIQUE", columns={"username", "Empresa_RUC"}),
  *     @ORM\UniqueConstraint(name="apodo_UNIQUE", columns={"apodo", "Empresa_RUC"}),
- *     @ORM\UniqueConstraint(name="DNI_UNIQUE", columns={"DNI", "Empresa_RUC"})
+ *     @ORM\UniqueConstraint(name="DNI_UNIQUE", columns={"RUC", "Empresa_RUC"})
  * }, indexes={
  *     @ORM\Index(name="fk_user_Cargo1_idx", columns={"Cargo_idCargo"}),
  *     @ORM\Index(name="fk_user_Empresa1_idx", columns={"Empresa_RUC"})})
@@ -69,12 +70,12 @@ class Usuario implements UserInterface, \Serializable
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaCreacion", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="fechaCreacion", type="datetime", nullable=true)
      */
-    private $fechacreacion = 'CURRENT_TIMESTAMP';
+    private $fechacreacion;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="apodo", type="string", length=45, nullable=true)
      */
@@ -95,7 +96,7 @@ class Usuario implements UserInterface, \Serializable
     private $apellidos;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="telefono1", type="string", length=15, nullable=true)
      */
@@ -111,7 +112,7 @@ class Usuario implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=1, nullable=false, options={"default"="1","fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado = '1';
 

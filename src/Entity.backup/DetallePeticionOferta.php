@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DetallePeticionOferta
  *
- * @ORM\Table(name="detalle_peticion_oferta", indexes={@ORM\Index(name="fk_peticion_oferta_has_solped_has_Material_peticion_oferta_idx", columns={"peticion_oferta_idpeticion_oferta"}), @ORM\Index(name="fk_Detalle_peticion_oferta_detalle_solped_idx", columns={"detalle_idsolped", "detalle_solped_idposicion"})})
+ * @ORM\Table(name="detalle_peticion_oferta", indexes={@ORM\Index(name="fk_peticion_oferta_has_solped_has_Material_peticion_oferta1_idx", columns={"peticion_oferta_idpeticion_oferta"}), @ORM\Index(name="fk_Detalle_peticion_oferta_detalle_solped1_idx", columns={"detalle_solped_solped_idsolped", "detalle_solped_idposicion"})})
  * @ORM\Entity(repositoryClass="App\Repository\DetallePeticionOfertaRepository")
  */
 class DetallePeticionOferta
@@ -24,14 +24,14 @@ class DetallePeticionOferta
     private $idposicion;
 
     /**
-     * @var float|null
+     * @var float
      *
      * @ORM\Column(name="oferta", type="float", precision=10, scale=0, nullable=true)
      */
     private $oferta;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(name="comentario", type="string", length=45, nullable=true)
      */
@@ -40,7 +40,7 @@ class DetallePeticionOferta
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=2, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=2, nullable=false)
      */
     private $estado;
 
@@ -49,7 +49,7 @@ class DetallePeticionOferta
      *
      * @ORM\ManyToOne(targetEntity="DetalleSolped", inversedBy="detallepeticionofertas")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="detalle_idsolped", referencedColumnName="solped_idsolped"),
+     *   @ORM\JoinColumn(name="detalle_solped_solped_idsolped", referencedColumnName="solped_idsolped"),
      *   @ORM\JoinColumn(name="detalle_solped_idposicion", referencedColumnName="idposicion")
      * })
      */
@@ -68,7 +68,9 @@ class DetallePeticionOferta
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\ManyToOne(targetEntity="PeticionOferta", inversedBy="detallespeticionesofertas")
-     * @ORM\JoinColumn(name="peticion_oferta_idpeticion_oferta", referencedColumnName="idpeticion_oferta")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="peticion_oferta_idpeticion_oferta", referencedColumnName="idpeticion_oferta")
+     * })
      */
     private $peticionOferta;
 

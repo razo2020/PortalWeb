@@ -15,7 +15,7 @@ class UndMedida
     /**
      * @var string
      *
-     * @ORM\Column(name="idUND_Medida", type="string", length=3, nullable=false)
+     * @ORM\Column(name="idUND_Medida", type="string", length=3, nullable=false, options={"fixed"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
@@ -29,7 +29,7 @@ class UndMedida
     private $nombre;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="descripcion", type="string", length=45, nullable=true)
      */
@@ -38,7 +38,7 @@ class UndMedida
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false, options={"default"="1","fixed"=true})
      */
     private $estado = '1';
 

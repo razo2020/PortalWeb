@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DetallePedido
  *
- * @ORM\Table(name="detalle_pedido", indexes={@ORM\Index(name="fk_Pedido_has_solped_has_Material_Pedido_idx", columns={"Pedido_idPedido"}), @ORM\Index(name="fk_Detalle_Pedido_Detalle_peticion_oferta_idx", columns={"Detalle_idpeticion_oferta", "Detalle_peticion_oferta_idposicion"}), @ORM\Index(name="fk_Detalle_Pedido_Detalle_solped_idx", columns={"Detalle_solped_idsolped", "Detalle_solped_idposicion"})})
+ * @ORM\Table(name="detalle_pedido", indexes={@ORM\Index(name="fk_Pedido_has_solped_has_Material_Pedido1_idx", columns={"Pedido_idPedido"}), @ORM\Index(name="fk_Detalle_Pedido_Detalle_peticion_oferta1_idx", columns={"Detalle_peticion_oferta_peticion_oferta_idpeticion_oferta", "Detalle_peticion_oferta_idposicion"}), @ORM\Index(name="fk_Detalle_Pedido_Detalle_solped1_idx", columns={"Detalle_solped_solped_idsolped", "Detalle_solped_idposicion"})})
  * @ORM\Entity(repositoryClass="App\Repository\DetallePedidoRepository")
  */
 class DetallePedido
@@ -40,7 +40,7 @@ class DetallePedido
     /**
      * @var string
      *
-     * @ORM\Column(name="estado", type="string", length=2, nullable=false, options={"fixed"=true})
+     * @ORM\Column(name="estado", type="string", length=2, nullable=false)
      */
     private $estado;
 
@@ -49,7 +49,7 @@ class DetallePedido
      *
      * @ORM\ManyToOne(targetEntity="DetallePeticionOferta", inversedBy="detallePedidos")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Detalle_idpeticion_oferta", referencedColumnName="peticion_oferta_idpeticion_oferta"),
+     *   @ORM\JoinColumn(name="Detalle_peticion_oferta_peticion_oferta_idpeticion_oferta", referencedColumnName="peticion_oferta_idpeticion_oferta"),
      *   @ORM\JoinColumn(name="Detalle_peticion_oferta_idposicion", referencedColumnName="idposicion")
      * })
      */
@@ -60,7 +60,7 @@ class DetallePedido
      *
      * @ORM\ManyToOne(targetEntity="DetalleSolped", inversedBy="detallepedidos")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Detalle_solped_idsolped", referencedColumnName="solped_idsolped"),
+     *   @ORM\JoinColumn(name="Detalle_solped_solped_idsolped", referencedColumnName="solped_idsolped"),
      *   @ORM\JoinColumn(name="Detalle_solped_idposicion", referencedColumnName="idposicion")
      * })
      */
